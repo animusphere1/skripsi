@@ -15,6 +15,10 @@ database.init();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/data', function(req,res) {
+     
+});
+
 app.post('/api/login', async (req,res) => {
    var getDataLogin = await database.getData('select * from user');
 
