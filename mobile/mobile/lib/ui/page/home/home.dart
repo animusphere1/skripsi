@@ -66,23 +66,40 @@ class HomePage extends StatelessWidget {
                                 color: Colors.grey.shade300,
                               ),
                             ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: index.isEven
+                                            ? Colors.green
+                                            : Colors.yellow),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
                   color: Colors.white,
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 20,
                   ),
                   child: ListView(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     children: [
                       ...List.generate(
@@ -90,6 +107,7 @@ class HomePage extends StatelessWidget {
                         (index) => Container(
                           height: heightSize(context) * 0.2,
                           color: index.isEven ? Colors.green : Colors.yellow,
+                          margin: EdgeInsets.only(bottom: 20),
                         ),
                       )
                     ],
@@ -111,7 +129,7 @@ class HomePage extends StatelessWidget {
           left: 20,
           right: 20,
           top: 20,
-          bottom: 40,
+          bottom: 50,
         ),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,

@@ -15,14 +15,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-coba();
-
-async function coba() {
-     console.log(await midtrans.gettokenpayment());
-}
-
-app.get('/data', async function(req,res) {
-     
+app.get('/api/getpromo', async function(req,res) {
+     res.send({'datas' : 'promo'});
 });
 
 app.post('/api/login', async (req,res) => {
