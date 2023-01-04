@@ -12,11 +12,11 @@ class RouteGenerator {
     switch (routes) {
       case routeHome:
         return GetPageRoute(
-          page: () => HomePage(),
+          page: () => const HomePage(),
         );
       default:
         return GetPageRoute(
-          page: () => HomePage(),
+          page: () => const HomePage(),
         );
     }
   }

@@ -12,7 +12,7 @@ async function gettokenpayment(params) {
 
     let parameter = {
         "transaction_details": {
-            "order_id": 'coba-12345',
+            "order_id": 'coba-sdadas',
             "gross_amount": 200000
         }, "credit_card":{
             "secure" : true

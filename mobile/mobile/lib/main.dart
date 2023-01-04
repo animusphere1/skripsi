@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile/core/payment/payment_controller.dart';
+import 'package:mobile/core/services/background_services.dart';
 import 'package:mobile/injector.dart';
 import 'package:mobile/routes.dart';
 
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Get.put<HomeController>(HomeController());
+  await PaymentController.instance.init();
 }
 
 void main() {
@@ -19,16 +20,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Mobile App',
-      themeMode: ThemeMode.light,
-      theme: ThemeData.light().copyWith(
-        scaffoldBackgroundColor: Colors.grey.shade200,
-        backgroundColor: Colors.white,
+    return BackgroundServices(
+      child: GetMaterialApp(
+        title: 'Mobile App',
+        themeMode: ThemeMode.light,
+        theme: ThemeData.light().copyWith(
+          scaffoldBackgroundColor: Colors.grey.shade200,
+          backgroundColor: Colors.white,
+          cardColor: Colors.black,
+        ),
+        initialBinding: Injector.instance,
+        onGenerateRoute: RouteGenerator.generateRoutes,
+        initialRoute: RouteGenerator.routeHome,
       ),
-      initialBinding: Injector.instance,
-      onGenerateRoute: RouteGenerator.generateRoutes,
-      initialRoute: RouteGenerator.routeHome,
+      status: (e) {
+        print(e);
+      },
     );
   }
 }

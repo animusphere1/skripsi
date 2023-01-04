@@ -10,12 +10,18 @@ const midtrans = require('./payment/midtrans.js');
 
 //initialze
 const app = express();
-database.init();
+// database.init();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/data', function(req,res) {
+coba();
+
+async function coba() {
+     console.log(await midtrans.gettokenpayment());
+}
+
+app.get('/data', async function(req,res) {
      
 });
 

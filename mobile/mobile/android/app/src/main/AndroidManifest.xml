@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mobile">
+    package="com.example.mobile"
+    xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -7,9 +8,11 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
    <application
+        android:theme="@style/AppTheme"
         android:label="mobile"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        tools:replace="android:label">
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyBtSvNPt4brk2qW7rronFrpX2V1O8K5jsM"/>
         <activity

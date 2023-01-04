@@ -1,223 +1,102 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile/main.dart';
-import 'package:mobile/ui/page/home/home_controller.dart';
 import 'package:mobile/ui/utils/fonts.dart';
 import 'package:mobile/ui/utils/size.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
-
-  final PageController pageController = PageController(
-    viewportFraction: 0.8,
-  );
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetX<HomeController>(
-      builder: (controller) {
-        return SafeArea(
-          child: Scaffold(
-            body: ScrollConfiguration(
-              behavior: RemoveScrollGlow(),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _appBar(context),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                      height: heightSize(context) * 0.2,
-                      child: PageView.builder(
-                        itemCount: controller.itemModels.length + 5,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: SizedBox(
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    height: heightSize(context) * 0.1,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 20,
-                                      vertical: 5,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.green.shade100,
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(10),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      'Jeep Wisata  $index',
-                                      style: googleFontsNunito().copyWith(
-                                        fontSize: 10,
-                                        color: Colors.green,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Container(
-                                      height: heightSize(context) * 0.168,
-                                      decoration: BoxDecoration(
-                                        color:
-                                            Theme.of(context).backgroundColor,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(20),
-                                        ),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          _contentMiniWidget(index, context),
-                                          _imageMiniWidget(context),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
+    return SafeArea(
+      child: Scaffold(
+        body: ScrollConfiguration(
+          behavior: RemoveScrollGlow(),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _appBar(context),
+                Container(
+                  width: widthSize(context),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).backgroundColor,
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.grey.withOpacity(0.3),
+                        width: 1.0,
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Chip(
-                            label: Text('All'),
-                          ),
-                          ...List.generate(
-                            10,
-                            (index) => Chip(
-                              label: Text('Text $index'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _imageMiniWidget(BuildContext context) {
-    return Container(
-      height: heightSize(context),
-      width: widthSize(context) * 0.15,
-      decoration: const BoxDecoration(
-        color: Colors.green,
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(
-            'https://picsum.photos/200/300',
-          ),
-        ),
-        borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(
-            20,
-          ),
-          topRight: Radius.circular(
-            20,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _contentMiniWidget(int index, BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 15,
-        ),
-        child: SizedBox(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    index.isOdd
-                        ? 'Tawangmangu Jeep Adventure'
-                        : 'Jeep Wisata Tawangmangu',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: googleFontsNunito().copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
-                    ),
                   ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.location_pin,
-                        size: 12,
-                        color: Colors.grey.shade400,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'Penawaran Untuk Kamu',
+                          style: googleFontsNunito().copyWith(
+                            fontWeight: FontWeight.w900,
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                        ),
                       ),
                       const SizedBox(
-                        width: 5,
+                        height: 20,
                       ),
                       SizedBox(
-                        width: 100,
-                        child: Text(
-                          'Jl.Banjarsari RT01 / 09, Tawangmangu',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: googleFontsNunito().copyWith(
-                            fontSize: 10,
-                            color: Colors.grey.shade400,
-                            fontWeight: FontWeight.w600,
+                        height: heightSize(context) * 0.12,
+                        child: ListView.builder(
+                          itemCount: 10,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => Container(
+                            width: widthSize(context) * 0.35,
+                            margin: const EdgeInsets.only(
+                              right: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey.shade300,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ],
-                  )
-                ],
-              ),
-              SizedBox(
-                width: widthSize(context),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Price Start From',
-                      style: googleFontsNunito().copyWith(
-                        fontSize: 8,
-                        color: Colors.grey.shade400,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      'Rp.500.000',
-                      style: googleFontsNunito().copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.green,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
+                  child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    children: [
+                      ...List.generate(
+                        10,
+                        (index) => Container(
+                          height: heightSize(context) * 0.2,
+                          color: index.isEven ? Colors.green : Colors.yellow,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -225,76 +104,152 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _appBar(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return ClipPath(
+      clipper: ClipPathClass(),
+      child: Container(
+        padding: const EdgeInsets.only(
+          left: 20,
+          right: 20,
+          top: 20,
+          bottom: 40,
+        ),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  width: 100,
-                  child: Text(
-                    'Hi, Fajar Bagus Widiarno',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: googleFontsNunito().copyWith(
-                      fontSize: 12,
-                      color: Colors.grey.shade600,
-                      fontWeight: FontWeight.w600,
-                    ),
+                Container(
+                  height: 35,
+                  width: 35,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  'Mau berwisata?',
-                  style: googleFontsNunito().copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).backgroundColor,
+                  ),
+                  child: const Icon(
+                    Icons.notifications,
+                    color: Colors.orange,
                   ),
                 ),
               ],
             ),
-          ),
-          Expanded(
-            flex: 1,
-            child: SizedBox(
+            const SizedBox(height: 20),
+            Text(
+              'Apa ingin kau lakukan?',
+              style: googleFontsNunito().copyWith(
+                color: Theme.of(context).backgroundColor,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.2,
+              ),
+            ),
+            const SizedBox(height: 5),
+            Text(
+              'Hello Fajar',
+              style: googleFontsNunito().copyWith(
+                color: Theme.of(context).backgroundColor,
+                fontWeight: FontWeight.w600,
+                fontSize: 25,
+                letterSpacing: 0.2,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 7,
+              ),
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(25),
+                ),
+              ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).canvasColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.notifications,
-                      size: 20,
+                  GestureDetector(
+                    onTap: () {
+                      print('tertap');
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        color: Colors.orange,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.search,
+                        size: 15,
+                        color: Theme.of(context).backgroundColor,
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Container(
-                    height: 40,
-                    width: 40,
-                    decoration: const BoxDecoration(
-                      color: Colors.green,
-                      shape: BoxShape.circle,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: TextField(
+                      maxLines: 1,
+                      onSubmitted: (value) {},
+                      onTap: () {},
+                      enabled: false,
+                      textInputAction: TextInputAction.search,
+                      decoration: InputDecoration.collapsed(
+                        hintText: 'Cari liburan mu disini !',
+                        hintStyle: googleFontsNunito().copyWith(
+                          color: Colors.grey.shade500,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          height: 1.4,
+                        ),
+                      ),
+                      style: googleFontsNunito().copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                        height: 1.4,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
+}
+
+class ClipPathClass extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    path.lineTo(0.0, size.height - 18);
+
+    var firstControlPoint = Offset(size.width / 4, size.height);
+    var firstPoint = Offset(size.width / 2, size.height);
+    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+        firstPoint.dx, firstPoint.dy);
+
+    var secondControlPoint = Offset(size.width - (size.width / 4), size.height);
+    var secondPoint = Offset(size.width, size.height - 18);
+    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
+        secondPoint.dx, secondPoint.dy);
+
+    path.lineTo(size.width, 0.0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
