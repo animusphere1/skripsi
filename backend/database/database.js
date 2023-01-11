@@ -8,11 +8,13 @@ async function init() {
 async function getData(query){ 
     var datas = new Promise((resolve, reject) => {
         connection.query(query,(err,result) => {
-            resolve(result);
+            setTimeout(() => {
+                resolve(result);
+            },1000);
         });
     });
 
     return datas;
 }
 
-module.exports = {getData,init};
+module.exports = {connection,getData,init};
