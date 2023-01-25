@@ -23,6 +23,19 @@ class PaymentController {
   }
 
   Future<void> makePayment(String token) async {
-    await midtransSDK.startPaymentUiFlow(token: token);
+    midtransSDK.startPaymentUiFlow(token: token).asStream().listen(
+      (event) {
+        print('listen');
+      },
+      onDone: () {
+        print('selesai');
+      },
+      onError: (err, stacktrace) {
+        print('err');
+      },
+      cancelOnError: true,
+    );
   }
+
+  err() {}
 }

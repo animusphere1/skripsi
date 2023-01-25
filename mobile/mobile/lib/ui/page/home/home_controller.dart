@@ -1,19 +1,13 @@
-import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController with GetTickerProviderStateMixin {
-  late RxBool onLoadModel;
-  late RxList<ItemModel> itemModels;
+  late RxBool isLoadItem;
 
   @override
   void onInit() {
     super.onInit();
-    init();
-  }
 
-  init() async {
-    onLoadModel = true.obs;
-    itemModels = <ItemModel>[].obs;
+    init();
   }
 
   @override
@@ -23,9 +17,14 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     ready();
   }
 
+  init() async {
+    isLoadItem = true.obs;
+  }
+
   ready() async {
-    await Future.delayed(const Duration(seconds: 2));
-    onLoadModel.value = false;
+    await Future.delayed(const Duration(seconds: 5));
+
+    isLoadItem.value = false;
   }
 }
 

@@ -15,6 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//routes manage user
 app.post('/api/login', async (req,res) => {
      var {email, password} = req.body;
 
@@ -39,10 +40,6 @@ app.post('/api/login', async (req,res) => {
      }
 });
 
-app.post('/api/register', (req,res) => {
-     res.status(200).send(response(status.success));
-})
-
 app.get('/api/logout', (req,res) => {
      console.log(req.body);
 
@@ -52,6 +49,25 @@ app.get('/api/logout', (req,res) => {
           res.status(200).send(response(status.success, req.body.nama));
      }
 });
+
+app.post('/api/register', (req,res) => {
+     res.status(200).send(response(status.success));
+})
+
+//routes payment
+app.post('/api/gettoken', async (req,res) => {
+     var getToken = await midtrans.gettokenpayment();
+
+     var {token} = getToken;
+
+     if (token == undefined) {
+          res.status(400).send(response(status.error));
+     }
+
+     res.status(200).send(response(status.success, {'token' : token}));
+
+});
+
 
 app.listen(3000, function() {
     console.log('jalan');

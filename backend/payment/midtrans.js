@@ -9,7 +9,7 @@ async function gettokenpayment(params) {
         serverKey : serverKey,
         clientKey : clientKey,
     })
-
+    
     let parameter = {
         "transaction_details": {
             "order_id": 'coba-sdadas',
@@ -23,7 +23,7 @@ async function gettokenpayment(params) {
 }
 
 async function checkStatus(params) {
-    let apiClient = new midtransClient.Snap({
+    let snap = new midtransClient.Snap({
         isProduction : false,
         serverKey : serverKey,
         clientKey : clientKey,

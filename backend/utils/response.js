@@ -12,4 +12,6 @@ const response = (status,datas) => {
     }
 }
 
+
+
 module.exports = {response}
