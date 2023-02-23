@@ -7,11 +7,16 @@ const {response} = require('./utils/response.js');
 const {dateLocal} = require('./utils/date.js');
 const database = require('./database/database.js');
 const midtrans = require('./payment/midtrans.js');
+// const bodyparse = require('body-parser');
+
+const multer = require('multer');
+const upload = multer();
 
 //initialze
 const app = express();
 // database.init();
 
+app.use(upload.none());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -38,7 +43,24 @@ app.post('/api/login', async (req,res) => {
                res.send(response(200, datas));
           });
      }
+
+
 });
+
+app.post(
+     '/api/nama', (req,res) => {
+          console.log(req.body);
+
+
+          var {nama} = req.body;
+
+          if (nama != undefined) {
+               res.status(200).json({nama :  nama});
+          } else {
+               res.status(400).json({status : 'error'});
+          }
+     },
+);
 
 app.get('/api/logout', (req,res) => {
      console.log(req.body);
@@ -65,7 +87,6 @@ app.post('/api/gettoken', async (req,res) => {
      }
 
      res.status(200).send(response(status.success, {'token' : token}));
-
 });
 
 

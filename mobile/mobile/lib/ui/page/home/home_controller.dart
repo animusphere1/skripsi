@@ -1,7 +1,14 @@
-import 'package:get/get.dart';
+import 'dart:async';
 
-class HomeController extends GetxController with GetTickerProviderStateMixin {
-  late RxBool isLoadItem;
+import 'package:flutter/animation.dart';
+import 'package:get/get.dart';
+import 'package:mobile/controller.dart';
+
+class HomeController extends GetxController
+    with GetTickerProviderStateMixin
+    implements Controller {
+  late Rx<AnimationController> animationController;
+  late Rx<Animation> animation;
 
   @override
   void onInit() {
@@ -17,14 +24,28 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     ready();
   }
 
-  init() async {
-    isLoadItem = true.obs;
+  @override
+  FutureOr<void> init() async {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    ).obs;
+
+    animation = Tween<Offset>(
+      begin: const Offset(0, 0),
+      end: const Offset(0, 200),
+    )
+        .animate(
+          animationController.value,
+        )
+        .obs;
   }
 
-  ready() async {
-    await Future.delayed(const Duration(seconds: 5));
+  @override
+  FutureOr<void> ready() async {
+    await Future.delayed(const Duration(seconds: 2));
 
-    isLoadItem.value = false;
+    animationController.value.forward();
   }
 }
 
