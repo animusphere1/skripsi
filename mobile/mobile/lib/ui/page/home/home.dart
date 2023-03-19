@@ -133,7 +133,9 @@ class ContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {},
+      onTap: () async {
+        print('ubahsaja');
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Stack(
