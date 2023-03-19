@@ -138,10 +138,6 @@ class ContentWidget extends StatelessWidget {
         print('dia itu apa saja sih');
 
         print('dia itu apa saja sih');
-
-        print('dia itu apa saja sih');
-
-        print('dia itu apa saja sih');
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
