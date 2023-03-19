@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
         title: 'Mobile App',
         themeMode: ThemeMode.light,
         theme: ThemeData.light().copyWith(
-          scaffoldBackgroundColor: Colors.grey.shade200,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.grey.shade100,
+          scaffoldBackgroundColor: Colors.white,
           cardColor: Colors.black,
         ),
         initialBinding: Injector.instance,

@@ -5,5 +5,5 @@ double heightSize(BuildContext context) {
 }
 
 double widthSize(BuildContext context) {
-  return MediaQuery.of(context).size.height;
+  return MediaQuery.of(context).size.width;
 }

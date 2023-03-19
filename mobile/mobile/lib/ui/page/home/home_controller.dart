@@ -7,6 +7,10 @@ import 'package:mobile/controller.dart';
 class HomeController extends GetxController
     with GetTickerProviderStateMixin
     implements Controller {
+  //data
+  late RxList<String> datas;
+
+  //animation
   late Rx<AnimationController> animationController;
   late Rx<Animation> animation;
 
@@ -26,6 +30,8 @@ class HomeController extends GetxController
 
   @override
   FutureOr<void> init() async {
+    datas = <String>[].obs;
+
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -44,6 +50,8 @@ class HomeController extends GetxController
   @override
   FutureOr<void> ready() async {
     await Future.delayed(const Duration(seconds: 2));
+
+    datas.value = ['1', '2', '3'];
 
     animationController.value.forward();
   }

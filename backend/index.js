@@ -20,6 +20,10 @@ app.use(upload.none());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.post('/coba',async function name(req,res){
+     res.status(200).json({nama : 'fajar'});
+});
+
 //routes manage user
 app.post('/api/login', async (req,res) => {
      var {email, password} = req.body;
@@ -27,7 +31,8 @@ app.post('/api/login', async (req,res) => {
      var datas = await database.getData(`select * from user where email = '${email}' && password = '${password}' limit 1`);
 
      if (datas == undefined) {
-          res.send(response(400));
+     
+          
      } else {
           var token = jwt.sign(password, 'rahasia');
 
@@ -43,24 +48,7 @@ app.post('/api/login', async (req,res) => {
                res.send(response(200, datas));
           });
      }
-
-
 });
-
-app.post(
-     '/api/nama', (req,res) => {
-          console.log(req.body);
-
-
-          var {nama} = req.body;
-
-          if (nama != undefined) {
-               res.status(200).json({nama :  nama});
-          } else {
-               res.status(400).json({status : 'error'});
-          }
-     },
-);
 
 app.get('/api/logout', (req,res) => {
      console.log(req.body);
@@ -78,7 +66,7 @@ app.post('/api/register', (req,res) => {
 
 //routes payment
 app.post('/api/gettoken', async (req,res) => {
-     var getToken = await midtrans.gettokenpayment();
+     var getToken = await midtrans.gettokenpayment({nama : 'fajartokennumb'});
 
      var {token} = getToken;
 

@@ -44,6 +44,8 @@ dependencies:
   midtrans_sdk: ^0.3.4
   shimmer: ^2.0.0
   ionicons: ^0.2.1
+  build_runner: ^2.1.11
+  build: ^2.3.1
 
 dev_dependencies:
   flutter_test:
