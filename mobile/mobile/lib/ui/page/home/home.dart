@@ -135,6 +135,8 @@ class ContentWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         print('ubahsaja');
+
+        print('apa iya');
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
