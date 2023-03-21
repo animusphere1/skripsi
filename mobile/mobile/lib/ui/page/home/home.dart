@@ -85,32 +85,12 @@ class HomePage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return ContentWidget(
                         name: index.toString(),
-                        onTap: <String>() async => 'ini data string' as String,
+                        onTap: () async {},
                       );
                     },
                   ),
                 ),
                 const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Row(
-                    children: [
-                      ...List.generate(
-                        4,
-                        (index) => Container(
-                          height: 10,
-                          width: 10,
-                          margin: const EdgeInsets.only(right: 10),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color:
-                                index % 2 == 0 ? Colors.green : Colors.yellow,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),
@@ -122,7 +102,7 @@ class HomePage extends StatelessWidget {
 
 class ContentWidget extends StatelessWidget {
   final String? name;
-  final Future<T> Function<T>()? onTap;
+  final Function? onTap;
 
   const ContentWidget({
     Key? key,
@@ -134,27 +114,7 @@ class ContentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        print('dia itu apa saja sih');
-        print('dia itu apa saja sih');
-
-        print('dia itu apa saja sih');
-
-        print('dia itu apa saja sih');
-        print('dia itu apa saja sih');
-
-        print('dia itu apa saja sih');
-        print('dia itu apa saja sih');
-        print('dia itu apa saja sih');
-
-        print('dia itu apa saja sih');
-        print('dia itu apa saja sih');
-        print('dia itu apa saja sih');
-
-        print('dia itu apa saja sih');
-        print('dia itu apa saja sih');
-
-        print('apa saja ');
-        print('apa saja ');
+        onTap!();
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

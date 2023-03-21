@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:midtrans_sdk/midtrans_sdk.dart';
 
 class PaymentController {
@@ -23,19 +25,6 @@ class PaymentController {
   }
 
   Future<void> makePayment(String token) async {
-    midtransSDK.startPaymentUiFlow(token: token).asStream().listen(
-      (event) {
-        print('listen');
-      },
-      onDone: () {
-        print('selesai');
-      },
-      onError: (err, stacktrace) {
-        print('err');
-      },
-      cancelOnError: true,
-    );
+    await midtransSDK.startPaymentUiFlow(token: token);
   }
-
-  err() {}
 }

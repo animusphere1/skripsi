@@ -66,7 +66,10 @@ app.post('/api/register', (req,res) => {
 
 //routes payment
 app.post('/api/gettoken', async (req,res) => {
-     var getToken = await midtrans.gettokenpayment({nama : 'fajartokennumb'});
+     var getToken = await midtrans.gettokenpayment({nama : 'baru saja buat 2'});
+
+     var check = await midtrans.checkStatus('baru saja buat 2');
+
 
      var {token} = getToken;
 
@@ -74,7 +77,7 @@ app.post('/api/gettoken', async (req,res) => {
           res.status(400).send(response(status.error));
      }
 
-     res.status(200).send(response(status.success, {'token' : token}));
+     res.status(200).send(response(status.success, {'token' : token,'check' : check}));
 });
 
 
