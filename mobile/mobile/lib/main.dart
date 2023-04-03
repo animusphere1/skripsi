@@ -4,6 +4,7 @@ import 'package:mobile/core/payment/payment_controller.dart';
 import 'package:mobile/core/services/background_services.dart';
 import 'package:mobile/injector.dart';
 import 'package:mobile/routes.dart';
+import 'package:mobile/ui/utils/fonts.dart';
 
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +26,8 @@ class MyApp extends StatelessWidget {
         title: 'Mobile App',
         themeMode: ThemeMode.light,
         theme: ThemeData.light().copyWith(
-          backgroundColor: Colors.grey.shade100,
-          scaffoldBackgroundColor: Colors.white,
+          scaffoldBackgroundColor: Colors.grey.shade100,
+          backgroundColor: Colors.white,
           cardColor: Colors.black,
         ),
         initialBinding: Injector.instance,

@@ -1,0 +1,25 @@
+.table-payment {
+  font-size: 15;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  color: green;
+}
+
+.table-payment table {
+  position: absolute;
+  padding-left: 1px;
+}
+
+.table-payment table tr th {
+  border: 10px solid;
+  width: 50px;
+}
+
+.angka-1:hover {
+  background-color: yellow;
+}
+/*# sourceMappingURL=main.css.map */
