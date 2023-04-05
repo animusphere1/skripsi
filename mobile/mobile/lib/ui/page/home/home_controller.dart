@@ -1,72 +1,27 @@
-import 'dart:async';
-
-import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
-import 'package:mobile/controller.dart';
 
-class HomeController extends GetxController
-    with GetTickerProviderStateMixin
-    implements Controller {
-  //data
-  late RxList<String> datas;
-
-  //animation
-  late Rx<AnimationController> animationController;
-  late Rx<Animation> animation;
+class HomeController extends GetxController {
+  late RxBool isLoading;
 
   @override
   void onInit() {
-    super.onInit();
-
     init();
+    super.onInit();
   }
 
   @override
   void onReady() {
-    super.onReady();
-
     ready();
+    super.onReady();
   }
 
-  @override
-  FutureOr<void> init() async {
-    datas = <String>[].obs;
-
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    ).obs;
-
-    animation = Tween<Offset>(
-      begin: const Offset(0, 0),
-      end: const Offset(0, 200),
-    )
-        .animate(
-          animationController.value,
-        )
-        .obs;
+  init() async {
+    isLoading = true.obs;
   }
 
-  @override
-  FutureOr<void> ready() async {
+  ready() async {
     await Future.delayed(const Duration(seconds: 2));
 
-    datas.value = ['1', '2', '3'];
-
-    animationController.value.forward();
-  }
-}
-
-class ItemModel {
-  String? idItem;
-  int? priceItem;
-
-  ItemModel({this.idItem, this.priceItem});
-
-  factory ItemModel.fromJson(Map map) {
-    return ItemModel(
-      idItem: map['id_car'] ?? '0',
-      priceItem: map['price'] ?? 0,
-    );
+    isLoading.value = false;
   }
 }
