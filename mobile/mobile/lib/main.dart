@@ -4,7 +4,6 @@ import 'package:mobile/core/payment/payment_controller.dart';
 import 'package:mobile/core/services/background_services.dart';
 import 'package:mobile/injector.dart';
 import 'package:mobile/routes.dart';
-import 'package:mobile/ui/utils/fonts.dart';
 
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
