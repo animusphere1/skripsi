@@ -1,18 +1,14 @@
 .table-payment {
-    font-size: 15;
-    height: max-content;
-    width: max-content;
-    color: green;
-    table {
-        position: absolute;
-        padding-left: 1px;
-        tr th {
-            border: 10px solid;
-            width: 50px;
-        }
-    }
+    border: 10px yellow solid;
+    height: 50%;
+    display: flex;
+    padding-top: 10px;
+    align-items: center;
+    justify-content: center;
 }
 
-.angka-1:hover {
-    background-color: yellow;
-}
+.child {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+  }

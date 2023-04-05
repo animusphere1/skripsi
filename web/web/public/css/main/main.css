@@ -1,25 +1,21 @@
 .table-payment {
-  font-size: 15;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  color: green;
+  border: 10px yellow solid;
+  height: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 10px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.table-payment table {
-  position: absolute;
-  padding-left: 1px;
-}
-
-.table-payment table tr th {
-  border: 10px solid;
+.child {
   width: 50px;
-}
-
-.angka-1:hover {
-  background-color: yellow;
+  height: 50px;
+  background-color: red;
 }
 /*# sourceMappingURL=main.css.map */
