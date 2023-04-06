@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.light,
         theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey.shade100,
-          backgroundColor: Colors.white,
-          cardColor: Colors.black,
+          backgroundColor: const Color.fromARGB(255, 33, 126, 36),
+          cardColor: Colors.white,
         ),
         initialBinding: Injector.instance,
         onGenerateRoute: RouteGenerator.generateRoutes,
