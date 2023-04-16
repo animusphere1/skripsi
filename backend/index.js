@@ -1,13 +1,17 @@
+//database
+const db = require('../backend/database/database.js');
+
 //package
 const express = require('express');
-const jwt = require('jsonwebtoken');
-//utils
-// const database = require('./database/database.js');
-
-const midtrans = require('./payment/midtrans.js');
-const {keluar} = require('./utils/response.js');
-
 const multer = require('multer');
+
+//utils
+const midtrans = require('./utils/payment/midtrans.js');
+const {response} = require('./utils/response.js');
+
+//routes
+const routes = require('./routes/routes.js');
+
 const upload = multer();
 
 //initialze
@@ -17,16 +21,13 @@ app.use(upload.none());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/api/payment/gettoken',async (req,res) => {
-     var {nama} = req.body;
+app.use('/api/payment', routes.payment);
 
-     var token = await midtrans.gettokenpayment({nama : nama});
-
-     res.json(token);
-});
-
+app.use('/api/account', routes.account);
 
 app.listen(3000, function() {
     console.log('server running');
+
+    db.init();
 });
 

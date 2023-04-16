@@ -12,6 +12,4 @@ const response = (status,datas) => {
     }
 }
 
-const keluar = {response}
-
-module.exports = {keluar}
+module.exports = {response}
