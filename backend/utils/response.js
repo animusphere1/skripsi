@@ -1,15 +1,15 @@
-const response = (status,datas) => {
-    if (datas == undefined) {
+const paymentResponse = (status,datas) => {
+    if (status == 400) {
         return {
-            'status' : status,
-            'datas' : 'not found',
+            'payment_detail' : null,
+            'status' : "not available",
         }
     } 
 
     return {
-        'status' : status,
-        'datas' : datas,
+        'payment_detail' : datas,
+        'status' : "available",
     }
 }
 
-module.exports = {response}
+module.exports = {paymentResponse}

@@ -6,8 +6,15 @@ dateNow = () => {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes()).toLocaleString().replace(' ','').split(',');
 }
 
-dateLocal = {
-    dateNow,
-};
+dateExpiredToken = () => {
+    var date = new Date();
 
-module.exports = {dateLocal}
+    date.setHours(date.getHours() + 2);
+
+    console.log(`jam awal: ${date.toLocaleString()}`);
+    
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes()).toLocaleString().replace(' ','').split(',');    
+}
+
+
+module.exports = {dateNow, dateExpiredToken};

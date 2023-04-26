@@ -1,22 +1,19 @@
 const express = require('express');
 
 const midtrans = require('../../backend/utils/payment/midtrans.js');
+const {paymentResponse} = require('../../backend/utils/response.js');
 
 const router = express.Router();
 
-router.get(
-    '/', (req,res) => {
-        res.send('ini api pertama');
-    }
-);
-
 router.post('/gettoken', async (req,res) => {
-    var token = await midtrans.gettokenpayment({nama : 'fajarwidiarno'});
+    var response = await midtrans.gettokenpayment({order_id : 'doniyuliantofajar'});
 
-    if (token === undefined) {
-        res.send('ini buat ambil token');  
+    console.log(res);
+
+    if (response.status === 400) {
+        res.send(paymentResponse(400, response.datas));  
     } else {
-        res.send(token);
+        res.send(paymentResponse(200, response.datas));
     }
 })
 

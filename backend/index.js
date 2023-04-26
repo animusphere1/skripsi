@@ -1,5 +1,5 @@
 //database
-const db = require('../backend/database/database.js');
+// const db = require('../backend/database/database.js');
 
 //package
 const express = require('express');
@@ -21,6 +21,10 @@ app.use(upload.none());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/' , (req,res) => {
+    res.send('ini index');
+});
+
 app.use('/api/payment', routes.payment);
 
 app.use('/api/account', routes.account);
@@ -28,6 +32,6 @@ app.use('/api/account', routes.account);
 app.listen(3000, function() {
     console.log('server running');
 
-    db.init();
+    // db.init();
 });
 

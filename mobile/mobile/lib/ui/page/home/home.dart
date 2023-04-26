@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mobile/ui/utils/fonts.dart';
 import 'package:mobile/ui/utils/size.dart';
 
@@ -16,7 +13,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   vertical: 20,
                 ),
                 decoration: BoxDecoration(
