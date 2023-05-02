@@ -1,27 +1,29 @@
-const { json } = require('body-parser');
 const midtransClient = require('midtrans-client');
-const {dateNow } = require('../date');
 
 let serverKey = 'SB-Mid-server-Vd-2J-VxTHS7lOqFUZw9sM1k'
 let clientKey = 'SB-Mid-client-5vrRgeJQktXIXFaM'
 
-async function gettokenpayment(params) {
-    console.log(params.order_id);
-    try {
-        let core = new midtransClient.CoreApi({
-            isProduction : false,
-            serverKey : serverKey,
-            clientKey : clientKey,
-        });
+async function gettokenpayment(order_id,params) {
+    let core = new midtransClient.CoreApi({
+        isProduction : false,
+        serverKey : serverKey,
+        clientKey : clientKey,
+    });
 
-        var check = await checkStatus(params.order_id);
+    let {nama} = params;
+
+    console.log(nama);
+    
+    try {
+        //check sudah ada belum
+        var isAlready = await checkStatus(order_id);
         
-      if (check.status === 400) {
+      if (isAlready.status === 400) {
         let parameter = {
             payment_type : 'bank_transfer',
             bank_transfer : {bank : 'bri'},
             transaction_details : {
-                 order_id: params.order_id,
+                 order_id: order_id,
                  gross_amount: 200000
             }, 
             credit_card :{

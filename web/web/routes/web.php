@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CobaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LandingController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +16,10 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LandingController::class, 'index']);
 
 Route::prefix('/admin')->group(
     function () {
         Route::get('/payment', [HomeController::class, 'index']);
-        // Route::post();
     }
 );

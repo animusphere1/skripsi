@@ -8,8 +8,15 @@ const paymentResponse = (status,datas) => {
 
     return {
         'payment_detail' : datas,
+        'expired' : datas.expiry_time,
         'status' : "available",
     }
 }
 
-module.exports = {paymentResponse}
+const nameRes = function(String,data) {
+    return {
+        string : data,
+    };
+}
+
+module.exports = {paymentResponse,nameRes}

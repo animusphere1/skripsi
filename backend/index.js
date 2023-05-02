@@ -31,7 +31,5 @@ app.use('/api/account', routes.account);
 
 app.listen(3000, function() {
     console.log('server running');
-
-    // db.init();
 });
 

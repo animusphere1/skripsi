@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-   @yield('header') 
-   @yield('content')
+    @yield('header')
+    @yield('content')
 </body>
 </html>
