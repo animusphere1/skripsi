@@ -1,9 +1,12 @@
+import 'package:flutter/animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mobile/core/core.dart';
 
-class HomeController extends GetxController implements Core {
-  late RxBool isLoading;
-  late RxList<String> namaSaya;
+class HomeController extends GetxController
+    with GetTickerProviderStateMixin
+    implements Core {
+  late Rx<PageController> pageController;
 
   @override
   void onInit() {
@@ -17,24 +20,13 @@ class HomeController extends GetxController implements Core {
     super.onReady();
   }
 
-  void change() {
-    namaSaya[0] = namaSaya[0] + 20.toString();
-  }
+  void change() {}
 
   @override
   void init() {
-    namaSaya = <String>[].obs;
+    pageController = PageController().obs;
   }
 
   @override
-  void ready() async {
-    namaSaya.value = [];
-
-    if (namaSaya.isEmpty) {
-      for (var i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(seconds: 2));
-        namaSaya.add(i.toString());
-      }
-    }
-  }
+  void ready() async {}
 }

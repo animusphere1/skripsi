@@ -1,16 +1,10 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-
-const { nameRes } = require("../../backend/utils/response.js");
-
+const axios = require("axios");
 const router = express.Router();
 
-router.post("/login", (req, res) => {
-  const { nama } = req.body;
-
-  const tokenJWT = jwt.sign(nama, [nama, nama].join());
-
-  res.send(nameRes("nama", { token: tokenJWT }));
+router.post("/login", async (req, res) => {
+  res.status(200).json({ response: "login" });
 });
 
 router.get("/logout", (req, res) => {

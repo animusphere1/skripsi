@@ -23,11 +23,17 @@ class MyApp extends StatelessWidget {
     return BackgroundServices(
       child: GetMaterialApp(
         title: 'Mobile App',
-        themeMode: ThemeMode.light,
+        themeMode: ThemeMode.dark,
         theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey.shade100,
           backgroundColor: const Color.fromARGB(255, 33, 126, 36),
           cardColor: Colors.white,
+        ),
+        darkTheme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: Colors.black,
+          backgroundColor: const Color.fromARGB(255, 33, 126, 36),
+          cardColor: Colors.grey.withOpacity(0.4),
+          canvasColor: const Color.fromARGB(255, 188, 233, 5),
         ),
         initialBinding: Injector.instance,
         onGenerateRoute: RouteGenerator.generateRoutes,

@@ -1,22 +1,24 @@
-const paymentResponse = (status,datas) => {
-    if (status == 400) {
-        return {
-            'payment_detail' : null,
-            'status' : "not available",
-        }
-    } 
-
+const paymentResponse = (status, datas) => {
+  if (status == 400) {
     return {
-        'payment_detail' : datas,
-        'expired' : datas.expiry_time,
-        'status' : "available",
-    }
-}
-
-const nameRes = function(String,data) {
-    return {
-        string : data,
+      payment_detail: null,
+      status: "not available",
     };
-}
+  }
 
-module.exports = {paymentResponse,nameRes}
+  return {
+    payment_detail: datas,
+    expired: datas.expiry_time,
+    status: "available",
+  };
+};
+
+const nameRes = function (String, data) {
+  if (data == undefined) {
+    return { String: "kosong" };
+  }
+
+  return { String: data };
+};
+
+module.exports = { paymentResponse, nameRes };
