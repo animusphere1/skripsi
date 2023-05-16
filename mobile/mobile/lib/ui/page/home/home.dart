@@ -10,49 +10,184 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetX<HomeController>(builder: (controller) {
-      return SafeArea(
-        child: Scaffold(
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _appBar(context),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'Recommended For You',
-                  style: googleFontsNunito().copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    wordSpacing: 0.5,
-                    letterSpacing: -0.2,
-                    fontSize: 20,
-                  ),
-                ),
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
               ),
-              const SizedBox(height: 10),
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: heightSize(context) * 0.6,
-                      child: PageView.builder(
-                        controller: controller.pageController.value,
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return const ContentItem();
-                        },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _appBar(context),
+                  const SizedBox(height: 35),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hello Fajar',
+                          style: googleFontsNunito().copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 35,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          'Selamat Datang Di WisaTamangu!',
+                          style: googleFontsNunito().copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.grey.shade500,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      height: heightSize(context) * 0.12,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(
+                            Ionicons.sunny_outline,
+                            color: Colors.yellow,
+                            size: 35,
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 15,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Saturday, 22 April 2023",
+                                    maxLines: 1,
+                                    style: googleFontsNunito().copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.grey.shade500,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  SizedBox(height: 2),
+                                  Text(
+                                    "Cerah",
+                                    style: googleFontsNunito().copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Text(
+                            '18 \u2103',
+                            style: googleFontsNunito().copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 35),
+                ],
               ),
-              const SizedBox(height: 10),
-            ],
-          ),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  GetX<HomeController>(
+                    builder: (controller) {
+                      return GestureDetector(
+                        onTap: () {
+                          controller.datas[0]['nama'] = 'doni';
+                        },
+                        child: Text(
+                          controller.datas[0]['nama'],
+                          style:
+                              googleFontsNunito().copyWith(color: Colors.black),
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(right: 35),
+                          child: Text(
+                            'All',
+                            style: googleFontsNunito().copyWith(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  'Petualangan',
+                                  'Kuliner',
+                                  'Hotel',
+                                ]
+                                    .map(
+                                      (e) => Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 35),
+                                        child: Text(
+                                          e,
+                                          style: googleFontsNunito().copyWith(
+                                            color: Colors.grey,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-      );
-    });
+      ),
+    );
   }
 
   Widget _appBar(BuildContext context) {
@@ -73,26 +208,24 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.person,
-                  size: 17,
-                  color: Colors.white,
-                ),
+              const Icon(
+                Ionicons.location,
+                color: Colors.white,
+                size: 20,
               ),
-              const SizedBox(width: 10),
-              Text(
-                'Hi, Fajar!',
-                style: googleFontsNunito().copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
+              const SizedBox(width: 7),
+              SizedBox(
+                width: widthSize(context) * 0.23,
+                child: Text(
+                  'Banjarsari, Tawangmangu',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: googleFontsNunito().copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
@@ -119,118 +252,10 @@ class HomePage extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
-                  Ionicons.menu,
+                  Ionicons.person,
                   size: 17,
                   color: Colors.white,
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ContentItem extends StatefulWidget {
-  const ContentItem({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<ContentItem> createState() => _ContentItemState();
-}
-
-class _ContentItemState extends State<ContentItem>
-    with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation<double> animation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    )..forward();
-    animation = Tween<double>(
-      begin: 0.0,
-      end: 20.0,
-    ).animate(animationController);
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-      ),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 2,
-                child: Container(
-                  height: heightSize(context) * 0.4,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 15,
-                  ),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                          'https://fastly.picsum.photos/id/20/3670/2462.jpg?hmac=CmQ0ln-k5ZqkdtLvVO23LjVAEabZQx2wOaT4pyeG10I'),
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: widthSize(context) * 0.5,
-                    child: Text(
-                      'Jeep Tawangmangu Adventure',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: googleFontsNunito().copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w900,
-                        wordSpacing: 0.5,
-                        letterSpacing: -0.2,
-                        fontSize: 17,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    'Jeep Tawangmangu Adventure',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: googleFontsNunito().copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      wordSpacing: 0.5,
-                      letterSpacing: -0.2,
-                      fontSize: 17,
-                    ),
-                  ),
-                ],
               ),
             ],
           ),

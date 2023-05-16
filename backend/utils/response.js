@@ -13,7 +13,7 @@ const paymentResponse = (status, datas) => {
   };
 };
 
-const nameRes = function (String, data) {
+const accountResponse = function (String, data) {
   if (data == undefined) {
     return { String: "kosong" };
   }
@@ -21,4 +21,4 @@ const nameRes = function (String, data) {
   return { String: data };
 };
 
-module.exports = { paymentResponse, nameRes };
+module.exports = { paymentResponse, accountResponse };

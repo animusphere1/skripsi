@@ -29,6 +29,12 @@ app.use("/api/payment", routes.payment);
 
 app.use("/api/account", routes.account);
 
+app.get("/api/account/cobabaru", (req, res) => {
+  var { baru } = req.headers;
+
+  res.send(baru);
+});
+
 app.listen(3000, function () {
   console.log("server running");
 });

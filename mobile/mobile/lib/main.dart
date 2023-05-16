@@ -30,10 +30,11 @@ class MyApp extends StatelessWidget {
           cardColor: Colors.white,
         ),
         darkTheme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: Colors.black,
+          scaffoldBackgroundColor: Colors.white,
           backgroundColor: const Color.fromARGB(255, 33, 126, 36),
-          cardColor: Colors.grey.withOpacity(0.4),
+          cardColor: Colors.blueGrey.withOpacity(0.2),
           canvasColor: const Color.fromARGB(255, 188, 233, 5),
+          primaryColor: Colors.black,
         ),
         initialBinding: Injector.instance,
         onGenerateRoute: RouteGenerator.generateRoutes,

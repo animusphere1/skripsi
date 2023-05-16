@@ -8,13 +8,27 @@ const router = express.Router();
 router.post("/gettoken", async (req, res) => {
   let { id } = req.body;
 
-  var response = await midtrans.gettokenpayment(id, { nama: "fajar" });
+  try {
+    var response = await midtrans.gettokenpayment(id, { nama: "fajar" });
 
-  if (response.status === 400) {
-    res.status(400).json(paymentResponse(400, response.datas));
-  } else {
-    res.status(200).send(paymentResponse(200, response.datas));
+    if (response.status === 400) {
+      res.status(400).json(paymentResponse(400, response.datas));
+    } else {
+      res.status(200).send(paymentResponse(200, response.datas));
+    }
+  } catch (error) {
+    res.status(200).send({ status: error });
   }
+});
+
+router.get("/checktoken", async (req, res) => {
+  const { id } = req.body;
+
+  console.log(id);
+
+  var response = await midtrans.checkStatus(id);
+
+  res.status(400).json({ status: response });
 });
 
 module.exports = router;

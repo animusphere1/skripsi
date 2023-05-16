@@ -8,6 +8,8 @@ class HomeController extends GetxController
     implements Core {
   late Rx<PageController> pageController;
 
+  late RxList<Map<String, dynamic>> datas;
+
   @override
   void onInit() {
     init();
@@ -25,8 +27,18 @@ class HomeController extends GetxController
   @override
   void init() {
     pageController = PageController().obs;
+
+    datas = <Map<String, dynamic>>[].obs;
   }
 
   @override
-  void ready() async {}
+  void ready() async {
+    datas.value = [
+      {'nama': 'fajar'},
+    ];
+  }
+
+  void onChange() {
+    datas[0]['nama'] = 'doni yuli';
+  }
 }

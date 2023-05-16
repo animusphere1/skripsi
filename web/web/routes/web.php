@@ -16,10 +16,10 @@ use App\Http\Controllers\LandingController;
 |
 */
 
-Route::get('/', [LandingController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
 
 Route::prefix('/admin')->group(
     function () {
-        Route::get('/payment', [HomeController::class, 'index']);
+        // Route::get('/payment', [HomeController::class, 'index']);
     }
 );
