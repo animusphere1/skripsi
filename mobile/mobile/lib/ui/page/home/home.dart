@@ -1,6 +1,11 @@
+import 'dart:ui';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mobile/core/payment/location_controller.dart';
+import 'package:mobile/routes.dart';
 import 'package:mobile/ui/page/home/home_controller.dart';
 import 'package:mobile/ui/utils/fonts.dart';
 import 'package:mobile/ui/utils/size.dart';
@@ -12,178 +17,242 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
+        body: Stack(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _appBar(context),
-                  const SizedBox(height: 35),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Hello Fajar',
-                          style: googleFontsNunito().copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 35,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          'Selamat Datang Di WisaTamangu!',
-                          style: googleFontsNunito().copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: Colors.grey.shade500,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Theme.of(context).cardColor,
+                        width: 2.0,
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      height: heightSize(context) * 0.12,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _appBar(context),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Selamat Pagi",
+                              style: googleFontsNunito().copyWith(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context)
+                                    .scaffoldBackgroundColor
+                                    .withOpacity(
+                                      0.5,
+                                    ),
+                              ),
+                            ),
+                            Text(
+                              'Fajar Bagus Widiarno',
+                              style: googleFontsNunito().copyWith(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      const SizedBox(height: 25),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Container(
+                          height: heightSize(context) * 0.07,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          child: Row(
+                            children: const [
+                              Icon(Ionicons.search),
+                              SizedBox(width: 10),
+                              Expanded(
+                                child: TextField(
+                                  style: TextStyle(
+                                    height: 1.4,
+                                  ),
+                                  decoration: InputDecoration.collapsed(
+                                    hintText: "Search destination",
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                _listCategory(context),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 15,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
                         children: [
-                          Icon(
-                            Ionicons.sunny_outline,
-                            color: Colors.yellow,
-                            size: 35,
+                          title(
+                            context,
+                            caption: "Top Picks",
                           ),
-                          Expanded(
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 15,
+                          SizedBox(
+                            height: heightSize(context) * 0.3,
+                            child: ListView.builder(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Saturday, 22 April 2023",
-                                    maxLines: 1,
-                                    style: googleFontsNunito().copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.grey.shade500,
-                                      fontSize: 12,
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: 20,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  width: widthSize(context) * 0.5,
+                                  margin: const EdgeInsets.only(right: 15),
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20),
                                     ),
                                   ),
-                                  SizedBox(height: 2),
-                                  Text(
-                                    "Cerah",
-                                    style: googleFontsNunito().copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 17,
-                                    ),
+                                  child: Column(
+                                    children: [
+                                      Flexible(
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            ),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                'https://picsum.photos/200/300?grayscale',
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: Container(
+                                          color: Colors.yellow,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                );
+                              },
                             ),
-                          ),
-                          Text(
-                            '18 \u2103',
-                            style: googleFontsNunito().copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
+                          )
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: 35),
-                ],
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget title(
+    BuildContext context, {
+    String? caption,
+    TextStyle? textStyle,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            caption ?? 'caption',
+            style: textStyle ??
+                googleFontsNunito().copyWith(
+                  color: Theme.of(context).cardColor,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 0.2,
+                  fontSize: 18,
+                ),
+          ),
+          GestureDetector(
+            onTap: () {},
+            child: Text(
+              'See All',
+              style: googleFontsNunito().copyWith(
+                fontSize: 15,
+                color: Colors.grey,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  GetX<HomeController>(
-                    builder: (controller) {
-                      return GestureDetector(
-                        onTap: () {
-                          controller.datas[0]['nama'] = 'doni';
-                        },
-                        child: Text(
-                          controller.datas[0]['nama'],
-                          style:
-                              googleFontsNunito().copyWith(color: Colors.black),
-                        ),
-                      );
-                    },
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _listCategory(BuildContext context) {
+    return Container(
+      width: widthSize(context),
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+      ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.only(left: 20),
+        child: Row(
+          children: [
+            ...List.from(
+              [
+                'All',
+                'Petualangan',
+                'Kuliner',
+                'Wisata Religi',
+                'Oleh-Oleh',
+              ],
+            ).map(
+              (e) => Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: (e as String).toLowerCase() == "petualangan"
+                      ? Colors.orange
+                      : Theme.of(context).cardColor,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(5),
                   ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(right: 35),
-                          child: Text(
-                            'All',
-                            style: googleFontsNunito().copyWith(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  'Petualangan',
-                                  'Kuliner',
-                                  'Hotel',
-                                ]
-                                    .map(
-                                      (e) => Container(
-                                        margin:
-                                            const EdgeInsets.only(right: 35),
-                                        child: Text(
-                                          e,
-                                          style: googleFontsNunito().copyWith(
-                                            color: Colors.grey,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                ),
+                margin: const EdgeInsets.only(right: 15),
+                child: Text(
+                  e,
+                  style: googleFontsNunito().copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),
@@ -216,16 +285,13 @@ class HomePage extends StatelessWidget {
                 size: 20,
               ),
               const SizedBox(width: 7),
-              SizedBox(
-                width: widthSize(context) * 0.23,
-                child: Text(
-                  'Banjarsari, Tawangmangu',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: googleFontsNunito().copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Text(
+                "Banjarsari",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: googleFontsNunito().copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
@@ -262,5 +328,15 @@ class HomePage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<String> getPicture() async {
+    var dio = Dio();
+
+    var response = await dio.get("https://picsum.photos/v2/list");
+
+    print(response.data[0]);
+
+    return response.data[0]['url'];
   }
 }

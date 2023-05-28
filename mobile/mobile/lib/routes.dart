@@ -5,7 +5,8 @@ import 'package:mobile/ui/page/home/home.dart';
 
 class RouteGenerator {
   static const routeHome = '/';
-  static const routeDetal = '/detail';
+  static const routeDetail = '/detail';
+  static const routeProfile = '/profile';
 
   static Route<dynamic> generateRoutes(RouteSettings settings) {
     var routes = settings.name;
@@ -14,11 +15,11 @@ class RouteGenerator {
     switch (routes) {
       case routeHome:
         return GetPageRoute(
-          page: () => HomePage(),
+          page: () => const HomePage(),
         );
-      case routeDetal:
+      case routeDetail:
         return GetPageRoute(
-          page: () => DetailPage(),
+          page: () => const DetailPage(),
         );
       default:
         return GetPageRoute(

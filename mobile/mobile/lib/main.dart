@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile/core/payment/payment_controller.dart';
 import 'package:mobile/core/services/background_services.dart';
+import 'package:mobile/core/services/gps_services.dart';
 import 'package:mobile/injector.dart';
 import 'package:mobile/routes.dart';
 
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await PaymentController.instance.init();
+  var response = await Future.wait([
+    Permission.gpsPermission(),
+    PaymentController.instance.init(),
+  ]);
+
+  print(response);
 }
 
 void main() {
@@ -31,8 +37,8 @@ class MyApp extends StatelessWidget {
         ),
         darkTheme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: Colors.white,
-          backgroundColor: const Color.fromARGB(255, 33, 126, 36),
-          cardColor: Colors.blueGrey.withOpacity(0.2),
+          backgroundColor: const Color.fromARGB(255, 18, 184, 24),
+          cardColor: const Color.fromARGB(255, 27, 34, 39),
           canvasColor: const Color.fromARGB(255, 188, 233, 5),
           primaryColor: Colors.black,
         ),
