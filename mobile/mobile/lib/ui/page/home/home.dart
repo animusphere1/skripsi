@@ -1,171 +1,142 @@
-import 'dart:ui';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mobile/core/payment/location_controller.dart';
-import 'package:mobile/routes.dart';
-import 'package:mobile/ui/page/home/home_controller.dart';
+import 'package:mobile/main.dart';
+import 'package:mobile/ui/models/content_model.dart';
 import 'package:mobile/ui/utils/fonts.dart';
 import 'package:mobile/ui/utils/size.dart';
+import 'package:mobile/ui/utils/extension/extensions.dart' hide Title;
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Theme.of(context).cardColor,
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _appBar(context),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Selamat Pagi",
-                              style: googleFontsNunito().copyWith(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context)
-                                    .scaffoldBackgroundColor
-                                    .withOpacity(
-                                      0.5,
-                                    ),
-                              ),
-                            ),
-                            Text(
-                              'Fajar Bagus Widiarno',
-                              style: googleFontsNunito().copyWith(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+    return ScrollConfiguration(
+      behavior: RemoveScrollGlow(),
+      child: SafeArea(
+        child: Scaffold(
+          body: Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Theme.of(context).cardColor,
+                          width: 2.0,
                         ),
                       ),
-                      const SizedBox(height: 25),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Container(
-                          height: heightSize(context) * 0.07,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _appBar(context),
+                        Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).cardColor,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          child: Row(
-                            children: const [
-                              Icon(Ionicons.search),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: TextField(
-                                  style: TextStyle(
-                                    height: 1.4,
-                                  ),
-                                  decoration: InputDecoration.collapsed(
-                                    hintText: "Search destination",
-                                  ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Selamat Pagi",
+                                style: googleFontsNunito().copyWith(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context)
+                                      .scaffoldBackgroundColor
+                                      .withOpacity(
+                                        0.5,
+                                      ),
+                                ),
+                              ),
+                              Text(
+                                'Fajar Bagus Widiarno',
+                                style: googleFontsNunito().copyWith(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                _listCategory(context),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          title(
-                            context,
-                            caption: "Top Picks",
-                          ),
-                          SizedBox(
-                            height: heightSize(context) * 0.3,
-                            child: ListView.builder(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
+                        const SizedBox(height: 25),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Container(
+                            height: heightSize(context) * 0.07,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
                               ),
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: 20,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  width: widthSize(context) * 0.5,
-                                  margin: const EdgeInsets.only(right: 15),
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20),
+                            ),
+                            child: Row(
+                              children: const [
+                                Icon(Ionicons.search),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  child: TextField(
+                                    style: TextStyle(
+                                      height: 1.4,
+                                    ),
+                                    decoration: InputDecoration.collapsed(
+                                      hintText: "Search destination",
                                     ),
                                   ),
-                                  child: Column(
-                                    children: [
-                                      Flexible(
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              topRight: Radius.circular(20),
-                                            ),
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(
-                                                'https://picsum.photos/200/300?grayscale',
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Flexible(
-                                        child: Container(
-                                          color: Colors.yellow,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
+                                ),
+                              ],
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                )
-              ],
-            ),
-          ],
+                  _listCategory(context),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 15,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            title(
+                              context,
+                              caption: "Top Picks",
+                            ),
+                            SizedBox(
+                              height: heightSize(context) * 0.3,
+                              child: ListView.builder(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                ),
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount: 20,
+                                itemBuilder: (context, index) {
+                                  return ContentWidget(
+                                    contentModel: ContentModel(
+                                      title: 'Jeep Tawangmangu Adventure',
+                                      caption: 'Wisata Menggunakan Jeep',
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -329,14 +300,126 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Future<String> getPicture() async {
-    var dio = Dio();
+class ContentWidget extends StatefulWidget {
+  final ContentModel contentModel;
 
-    var response = await dio.get("https://picsum.photos/v2/list");
+  const ContentWidget({
+    Key? key,
+    required this.contentModel,
+  }) : super(key: key);
 
-    print(response.data[0]);
+  @override
+  State<ContentWidget> createState() => _ContentWidgetState();
+}
 
-    return response.data[0]['url'];
+class _ContentWidgetState extends State<ContentWidget>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: widthSize(context) * 0.5,
+        margin: const EdgeInsets.only(right: 15),
+        child: SizedBox(
+          child: Column(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                        'https://picsum.photos/seed/picsum/200/300',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 2,
+                child: Container(
+                  width: widthSize(context),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 15,
+                    horizontal: 15,
+                  ),
+                  color: Theme.of(context).cardColor,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.contentModel.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: googleFontsNunito().copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Ionicons.location,
+                            size: 15,
+                            color: Colors.orange,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                            child: Text(
+                              'Jl. Banjarsari RT 01/09, Tawangmangu',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: googleFontsNunito().copyWith(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '450.000'.toRupiah(),
+                            style: googleFontsNunito().copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const Icon(
+                            Ionicons.heart,
+                            size: 17,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

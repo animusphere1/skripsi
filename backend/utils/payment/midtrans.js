@@ -1,13 +1,10 @@
 const midtransClient = require("midtrans-client");
 
-let serverKey = "SB-Mid-server-Vd-2J-VxTHS7lOqFUZw9sM1k";
-let clientKey = "SB-Mid-client-5vrRgeJQktXIXFaM";
-
 async function gettokenpayment(order_id) {
   let core = new midtransClient.CoreApi({
     isProduction: false,
-    serverKey: serverKey,
-    clientKey: clientKey,
+    serverKey: process.env.serverKey,
+    clientKey: process.env.clientKey,
   });
 
   console.log(`error ${core}`);

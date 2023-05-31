@@ -4,10 +4,8 @@
 //package
 const express = require("express");
 const multer = require("multer");
-
 //utils
-const midtrans = require("./utils/payment/midtrans.js");
-const { response } = require("./utils/response.js");
+const { initEnv } = require("./utils/config/environtment.js");
 
 //routes
 const routes = require("./routes/routes.js");
@@ -16,6 +14,8 @@ const upload = multer();
 
 //initialze
 const app = express();
+
+initEnv();
 
 app.use(upload.none());
 app.use(express.json());
@@ -36,5 +36,5 @@ app.get("/api/account/cobabaru", (req, res) => {
 });
 
 app.listen(3000, function () {
-  console.log("server running");
+  console.log(`server running`);
 });

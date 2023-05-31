@@ -1,0 +1,4 @@
+enum StatusEnum {
+  avalaible,
+  notAvalaible,
+}
