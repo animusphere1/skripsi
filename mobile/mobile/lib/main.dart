@@ -32,12 +32,12 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.dark,
         theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey.shade100,
-          backgroundColor: const Color.fromARGB(255, 33, 126, 36),
+          backgroundColor: Colors.orange,
           cardColor: Colors.white,
         ),
         darkTheme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: Colors.white,
-          backgroundColor: const Color.fromARGB(255, 18, 184, 24),
+          scaffoldBackgroundColor: Colors.grey.shade100,
+          backgroundColor: Colors.orange,
           cardColor: const Color.fromARGB(255, 27, 34, 39),
           canvasColor: const Color.fromARGB(255, 188, 233, 5),
           primaryColor: Colors.black,

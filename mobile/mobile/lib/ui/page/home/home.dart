@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mobile/main.dart';
 import 'package:mobile/ui/models/content_model.dart';
@@ -99,19 +100,22 @@ class HomePage extends StatelessWidget {
                   _listCategory(context),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 15,
+                      padding: const EdgeInsets.only(
+                        bottom: 15,
                       ),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
+                            const SizedBox(height: 15),
                             title(
                               context,
-                              caption: "Top Picks",
+                              caption: "Populer",
+                              isSeeAll: true,
                             ),
                             SizedBox(
                               height: heightSize(context) * 0.3,
                               child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 20,
                                 ),
@@ -127,7 +131,23 @@ class HomePage extends StatelessWidget {
                                   );
                                 },
                               ),
-                            )
+                            ),
+                            const SizedBox(height: 20),
+                            title(
+                              context,
+                              caption: "Koleksi",
+                            ),
+                            ListView.builder(
+                              itemCount: 20,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return const CollectionWidget();
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -146,34 +166,38 @@ class HomePage extends StatelessWidget {
     BuildContext context, {
     String? caption,
     TextStyle? textStyle,
+    bool isSeeAll = false,
   }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
             caption ?? 'caption',
             style: textStyle ??
                 googleFontsNunito().copyWith(
-                  color: Theme.of(context).cardColor,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 0.2,
-                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.5,
+                  fontSize: 20,
                 ),
           ),
-          GestureDetector(
-            onTap: () {},
-            child: Text(
-              'See All',
-              style: googleFontsNunito().copyWith(
-                fontSize: 15,
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          )
+          isSeeAll
+              ? GestureDetector(
+                  onTap: () {},
+                  child: Text(
+                    'See All',
+                    style: googleFontsNunito().copyWith(
+                      fontSize: 13,
+                      color: Colors.grey.shade300,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              : const SizedBox()
         ],
       ),
     );
@@ -208,7 +232,7 @@ class HomePage extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: (e as String).toLowerCase() == "petualangan"
-                      ? Colors.orange
+                      ? Theme.of(context).backgroundColor
                       : Theme.of(context).cardColor,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(5),
@@ -302,6 +326,38 @@ class HomePage extends StatelessWidget {
   }
 }
 
+class CollectionWidget extends StatelessWidget {
+  const CollectionWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Get.isDarkMode
+            ? Get.changeThemeMode(ThemeMode.light)
+            : Get.changeThemeMode(ThemeMode.dark);
+      },
+      child: Container(
+        height: heightSize(context) * 0.3,
+        width: widthSize(context),
+        margin: const EdgeInsets.only(bottom: 20),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          border: Border.all(
+            color: Colors.grey.shade100,
+            width: 1.5,
+          ),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class ContentWidget extends StatefulWidget {
   final ContentModel contentModel;
 
@@ -368,10 +424,10 @@ class _ContentWidgetState extends State<ContentWidget>
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(
+                          Icon(
                             Ionicons.location,
-                            size: 15,
-                            color: Colors.orange,
+                            size: 17,
+                            color: Theme.of(context).backgroundColor,
                           ),
                           const SizedBox(
                             width: 5,
