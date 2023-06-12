@@ -12,7 +12,7 @@ class ContentModel {
   }
 
   factory ContentModel.fromJson(Map map) => ContentModel(
-        title: map['title'],
+        title: map['title'] ?? 'title',
         caption: map['caption'] ?? 'caption',
       );
 }

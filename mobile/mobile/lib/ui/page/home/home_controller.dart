@@ -6,9 +6,7 @@ import 'package:mobile/core/core.dart';
 class HomeController extends GetxController
     with GetTickerProviderStateMixin
     implements Core {
-  late Rx<PageController> pageController;
-
-  late RxList<Map<String, dynamic>> datas;
+  late RxString location;
 
   @override
   void onInit() {
@@ -26,19 +24,13 @@ class HomeController extends GetxController
 
   @override
   void init() {
-    pageController = PageController().obs;
-
-    datas = <Map<String, dynamic>>[].obs;
+    location = ''.obs;
   }
 
   @override
   void ready() async {
-    datas.value = [
-      {'nama': 'fajar'},
-    ];
+    location.value = 'Jl. Banjarsari RT 01/09';
   }
 
-  void onChange() {
-    datas[0]['nama'] = 'doni yuli';
-  }
+  void onChange() {}
 }
