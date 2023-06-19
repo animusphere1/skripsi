@@ -1,6 +1,6 @@
-const payment = require("./payment.js");
-const account = require("./account.js");
+const paymentRoute = require("./payment.js");
+const accountRoute = require("./account.js");
 
-const routes = { payment, account };
+const routerGenerator = { paymentRoute, accountRoute };
 
-module.exports = routes;
+module.exports = { routerGenerator };

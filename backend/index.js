@@ -5,15 +5,14 @@
 const express = require("express");
 const multer = require("multer");
 //utils
-const { initEnv } = require("./utils/config/environtment.js");
+const initEnv = require("./utils/config/environtment.js");
 
 //routes
-const routes = require("./routes/routes.js");
-
-const upload = multer();
+const { routerGenerator } = require("./routes/routes.js");
 
 //initialze
 const app = express();
+const upload = multer();
 
 initEnv();
 
@@ -25,15 +24,9 @@ app.get("/", (req, res) => {
   res.send("ini index");
 });
 
-app.use("/api/payment", routes.payment);
+app.use("/api/payment", routerGenerator.paymentRoute);
 
-app.use("/api/account", routes.account);
-
-app.get("/api/account/cobabaru", (req, res) => {
-  var { baru } = req.headers;
-
-  res.send(baru);
-});
+app.use("/api/account", routerGenerator.accountRoute);
 
 app.listen(3000, function () {
   console.log(`server running`);

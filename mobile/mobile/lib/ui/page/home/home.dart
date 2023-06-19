@@ -4,10 +4,9 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mobile/main.dart';
 import 'package:mobile/ui/models/content_model.dart';
 import 'package:mobile/ui/page/home/home_controller.dart';
-import 'package:mobile/ui/utils/extension/extension_string.dart';
 import 'package:mobile/ui/utils/fonts.dart';
 import 'package:mobile/ui/utils/size.dart';
-import 'package:mobile/ui/utils/extension/extensions.dart' hide Title;
+import 'widget/widgets.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -128,6 +127,7 @@ class HomePage extends StatelessWidget {
                                   itemCount: 20,
                                   itemBuilder: (context, index) {
                                     return ContentWidget(
+                                      index: index,
                                       contentModel: ContentModel(
                                         title: 'Jeep Tawangmangu Adventure',
                                         caption: 'Wisata Menggunakan Jeep',
@@ -144,18 +144,19 @@ class HomePage extends StatelessWidget {
                                 onTap: () => 'nama saya',
                               ),
                               ListView.builder(
-                                itemCount: 20,
+                                itemCount: controller.contentModels.length,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 20,
                                 ),
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
+                                  var contentModel =
+                                      controller.contentModels[index];
+
                                   return CollectionWidget(
-                                    contentModel: ContentModel.fromJson({
-                                      'title':
-                                          'jeep tawangmangu adventure $index',
-                                    }),
+                                    index: index,
+                                    contentModel: contentModel,
                                   );
                                 },
                               ),
@@ -291,9 +292,9 @@ class HomePage extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Icon(
+              Icon(
                 Ionicons.location,
-                color: Colors.white,
+                color: Theme.of(context).backgroundColor,
                 size: 20,
               ),
               const SizedBox(width: 7),
@@ -341,300 +342,4 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
-
-class CollectionWidget extends StatefulWidget {
-  final ContentModel contentModel;
-
-  const CollectionWidget({
-    Key? key,
-    required this.contentModel,
-  }) : super(key: key);
-
-  @override
-  State<CollectionWidget> createState() => _CollectionWidgetState();
-}
-
-class _CollectionWidgetState extends State<CollectionWidget>
-    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation animation;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    initAnimation();
-  }
-
-  Future<void> initAnimation() async {
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-    );
-
-    animation = ColorTween(
-      begin: Colors.white.withOpacity(0.5),
-      end: Colors.red,
-    ).animate(animationController);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var title = widget.contentModel.title;
-
-    super.build(context);
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        height: heightSize(context) * 0.3,
-        width: widthSize(context),
-        margin: const EdgeInsets.only(bottom: 20),
-        padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: widthSize(context) * 0.35,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(
-                    'https://picsum.photos/seed/picsum/200/300',
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  top: 15,
-                  bottom: 15,
-                ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor,
-                ),
-                child: Column(
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: widthSize(context) * 0.4,
-                            child: Text(
-                              title.toCamelCase(),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: googleFontsNunito().copyWith(
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.2,
-                                height: 1.6,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 7),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Ionicons.location,
-                                size: 17,
-                                color: Theme.of(context).backgroundColor,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'Jl. Banjarsari RT 01/09, Tawangmangu',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: googleFontsNunito().copyWith(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                'Rp. 450.000',
-                                style: googleFontsNunito().copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: AnimatedBuilder(
-                                  animation: animation,
-                                  builder: (context, child) {
-                                    return Icon(
-                                      Ionicons.heart,
-                                      color: animation.value,
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
-}
-
-class ContentWidget extends StatefulWidget {
-  final ContentModel contentModel;
-
-  const ContentWidget({
-    Key? key,
-    required this.contentModel,
-  }) : super(key: key);
-
-  @override
-  State<ContentWidget> createState() => _ContentWidgetState();
-}
-
-class _ContentWidgetState extends State<ContentWidget>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        width: widthSize(context) * 0.5,
-        margin: const EdgeInsets.only(right: 15),
-        child: SizedBox(
-          child: Column(
-            children: [
-              Flexible(
-                flex: 1,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                        'https://picsum.photos/seed/picsum/200/300',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: Container(
-                  width: widthSize(context),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 15,
-                    horizontal: 15,
-                  ),
-                  color: Theme.of(context).cardColor,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.contentModel.title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: googleFontsNunito().copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Ionicons.location,
-                            size: 17,
-                            color: Theme.of(context).backgroundColor,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                            child: Text(
-                              'Jl. Banjarsari RT 01/09, Tawangmangu',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: googleFontsNunito().copyWith(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              "${'450.000'.toRupiah()} ,-",
-                              style: googleFontsNunito().copyWith(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
-                            ),
-                            const Icon(
-                              Ionicons.heart,
-                              size: 17,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }

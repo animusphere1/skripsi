@@ -6,17 +6,19 @@ const { paymentResponse } = require("../../backend/utils/response.js");
 const router = express.Router();
 
 router.post("/gettoken", async (req, res) => {
-  let { order_id } = req.body;
+  let params = req.body;
+
+  console.log(params);
 
   try {
-    var response = await midtrans.gettokenpayment(order_id);
+    var response = await midtrans.getPayment(params);
 
-    console.log(response.datas.va_numbers);
+    console.log(response);
 
-    if (response.status === 400) {
-      res.status(400).json(paymentResponse(400, response.datas));
+    if (response.datas !== null) {
+      res.status(400).json({ status: "success", data: response.datas });
     } else {
-      res.status(200).send(paymentResponse(200, response.datas));
+      res.status(200).json({ status: "failed", error: response.error });
     }
   } catch (error) {
     res.status(200).send({ status: error });

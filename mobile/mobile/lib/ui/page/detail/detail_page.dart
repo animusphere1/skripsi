@@ -3,10 +3,13 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:mobile/routes.dart';
+import 'package:mobile/ui/models/content_model.dart';
 import 'package:mobile/ui/utils/size.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({super.key});
+  final ContentModel contentModel;
+
+  const DetailPage(this.contentModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,22 +19,11 @@ class DetailPage extends StatelessWidget {
         children: [
           SizedBox(
             child: GestureDetector(
-              onTap: ontap,
               child: Text('Tap aku mas'),
             ),
           ),
         ],
       ),
     );
-  }
-
-  void ontap() async {
-    var res = await Get.toNamed(RouteGenerator.routeHome);
-
-    print(res);
-
-    if (res != null) {
-      print(res);
-    }
   }
 }

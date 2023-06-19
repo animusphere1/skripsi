@@ -1,64 +1,68 @@
 const midtransClient = require("midtrans-client");
+const { json } = require("body-parser");
 
-async function gettokenpayment(order_id) {
+async function getPayment(params) {
+  const { order_id, bank, items } = params;
+
+  var items_details = JSON.parse(items);
+
   let core = new midtransClient.CoreApi({
     isProduction: false,
     serverKey: process.env.serverKey,
     clientKey: process.env.clientKey,
   });
 
-  console.log(`error ${core}`);
+  var check = await checkStatus(order_id);
 
-  try {
-    let parameter = {
-      payment_type: "bank_transfer",
-      bank_transfer: { bank: "bri" },
-      transaction_details: {
-        order_id: order_id,
-        gross_amount: 200000,
-      },
-      // credit_card: {
-      //   secure: true,
-      // },
-      item_details: [
-        {
-          id: "barulagi111",
-          name: "ayam goreng",
-          price: 100000,
-          quantity: 2,
-        },
-      ],
-      customer_details: {
-        first_name: "restu wahyu",
-        last_name: " saputra",
-        email: "restuwahyu13@zetmail.com",
-        phone: "087820154350",
-        billing_address: {
-          address: "jl.sibuta gua hantu no.120",
-          city: "Depok",
-          postal_code: "16436",
-        },
-      },
-    };
-
-    var response = await core.charge(parameter);
-
-    console.log(response);
-
+  if (check.status.status_code == 201) {
     return {
-      status: 200,
-      datas: response,
+      datas: null,
+      error: {
+        code: 400,
+        messages: "order id sudah ada atau pernah dipakai",
+      },
     };
-  } catch (error) {
-    return { status: 400, datas: null };
+  } else {
+    try {
+      var parameter = {
+        payment_type: "bank_transfer",
+        bank_transfer: { bank: bank, bank: bri },
+        transaction_details: {
+          order_id: order_id,
+          gross_amount: 1000000,
+        },
+        item_details: items_details,
+        customer_details: {
+          first_name: "restu wahyu",
+          last_name: " saputra",
+          email: "fajarbagusjp@gmail.com",
+          phone: "087820154350",
+          billing_address: {
+            address: "jl.sibuta gua hantu no.120",
+            city: "Depok",
+            postal_code: "16436",
+          },
+        },
+      };
+
+      var response_payment = await core.charge(parameter);
+
+      return {
+        datas: response_payment,
+      };
+    } catch (error) {
+      //jika terjadi kesalahan pada transaksi
+
+      return { datas: null, error: "error saat transaksi" };
+    }
   }
 }
 
 async function checkStatus(order_id) {
   let snap = new midtransClient.Snap({
     isProduction: false,
-    serverKey: serverKey,
-    clientKey: clientKey,
+    serverKey: process.env.serverKey,
+    clientKey: process.env.clientKey,
   });
 
   try {
@@ -72,4 +76,4 @@ async function checkStatus(order_id) {
   }
 }
 
-module.exports = { gettokenpayment, checkStatus };
+module.exports = { getPayment, checkStatus };
