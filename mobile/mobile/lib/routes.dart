@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:mobile/ui/models/content_model.dart';
 import 'package:mobile/ui/page/detail/detail_page.dart';
@@ -20,14 +21,22 @@ class RouteGenerator {
           page: () => const HomePage(),
         );
       case routeDetail:
-        if (arguments is ContentModel) {
+        if (kDebugMode) {
           return GetPageRoute(
-            page: () => DetailPage(arguments),
+            page: () => DetailPage(
+              ContentModel(title: 'test1', caption: 'test1'),
+            ),
           );
         } else {
-          return GetPageRoute(
-            page: () => const ErrorPage(),
-          );
+          if (arguments is ContentModel) {
+            return GetPageRoute(
+              page: () => DetailPage(arguments),
+            );
+          } else {
+            return GetPageRoute(
+              page: () => const ErrorPage(),
+            );
+          }
         }
 
       default:

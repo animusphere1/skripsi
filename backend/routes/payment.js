@@ -18,7 +18,7 @@ router.post("/gettoken", async (req, res) => {
     if (response.datas !== null) {
       res.status(400).json({ status: "success", data: response.datas });
     } else {
-      res.status(200).json({ status: "failed", error: response.error });
+      res.status(200).json({ status: "failed", data: null, error: response.error });
     }
   } catch (error) {
     res.status(200).send({ status: error });

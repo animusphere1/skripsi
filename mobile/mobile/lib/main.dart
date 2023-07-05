@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         ),
         initialBinding: Injector.instance,
         onGenerateRoute: RouteGenerator.generateRoutes,
-        initialRoute: RouteGenerator.routeHome,
+        initialRoute: RouteGenerator.routeDetail,
       ),
       status: (e) {
         print(e);

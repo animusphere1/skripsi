@@ -46,6 +46,7 @@ dependencies:
   build_runner: ^2.1.11
   build: ^2.3.1
   geolocator: ^9.0.2
+  table_calendar: ^3.0.9
 
 dev_dependencies:
   flutter_test:

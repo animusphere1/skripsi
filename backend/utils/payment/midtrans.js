@@ -12,6 +12,8 @@ async function getPayment(params) {
     clientKey: process.env.clientKey,
   });
 
+  console.log(nama(2));
+
   var check = await checkStatus(order_id);
 
   if (check.status.status_code == 201) {
@@ -26,7 +28,7 @@ async function getPayment(params) {
     try {
       var parameter = {
         payment_type: "bank_transfer",
-        bank_transfer: { bank: bank, bank: bri },
+        bank_transfer: { bank: bank },
         transaction_details: {
           order_id: order_id,
           gross_amount: 1000000,
@@ -75,5 +77,7 @@ async function checkStatus(order_id) {
     return { status: 400 };
   }
 }
+
+const nama = (params) => `doni ${params}`;
 
 module.exports = { getPayment, checkStatus };
