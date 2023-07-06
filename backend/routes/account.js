@@ -1,19 +1,18 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
-const router = express.Router();
+const accountRouter = express.Router();
 
 //response
 const response = require("../../backend/utils/response.js");
+const { json } = require("body-parser");
 
-router.post("/login", async (req, res) => {
+accountRouter.post("/login", async (req, res) => {
   res.status(200).json(response.accountResponse());
 });
 
-router.get("/logout", (req, res) => {});
+accountRouter.get("/logout", (req, res) => {});
 
-router.get("/register", (req, res) => {
-  res.send("daftar account");
-});
+accountRouter.get("/register", async (req, res) => {});
 
-module.exports = router;
+module.exports = { accountRouter };

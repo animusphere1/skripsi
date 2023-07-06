@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/ui/models/content_model.dart';
+import 'package:mobile/ui/utils/fonts.dart';
 import 'package:mobile/ui/utils/size.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -16,7 +17,9 @@ class DetailPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Column(
-          children: [],
+          children: [
+            _appBar(context),
+          ],
         ),
       ),
     );

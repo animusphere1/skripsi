@@ -24,9 +24,11 @@ app.get("/", (req, res) => {
   res.send("ini index");
 });
 
-app.use("/api/payment", routerGenerator.paymentRoute);
+app.use("/api/payment", routerGenerator.paymentRouter);
 
-app.use("/api/account", routerGenerator.accountRoute);
+app.use("/api/account", routerGenerator.accountRouter);
+
+app.use("/api/data/", routerGenerator.jeepDatasRouter);
 
 app.listen(3000, function () {
   console.log(`server running`);

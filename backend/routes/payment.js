@@ -3,9 +3,9 @@ const express = require("express");
 const midtrans = require("../../backend/utils/payment/midtrans.js");
 const { paymentResponse } = require("../../backend/utils/response.js");
 
-const router = express.Router();
+const paymentRouter = express.Router();
 
-router.post("/gettoken", async (req, res) => {
+paymentRouter.post("/gettoken", async (req, res) => {
   let params = req.body;
 
   console.log(params);
@@ -25,7 +25,7 @@ router.post("/gettoken", async (req, res) => {
   }
 });
 
-router.get("/checktoken", async (req, res) => {
+paymentRouter.get("/checktoken", async (req, res) => {
   const { id } = req.body;
 
   console.log(id);
@@ -35,4 +35,4 @@ router.get("/checktoken", async (req, res) => {
   res.status(400).json({ status: response });
 });
 
-module.exports = router;
+module.exports = { paymentRouter };

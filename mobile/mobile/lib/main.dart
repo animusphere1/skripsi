@@ -32,19 +32,15 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.dark,
         theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey.shade100,
-          backgroundColor: Colors.orange,
-          cardColor: Colors.white,
+          backgroundColor: Colors.white,
         ),
         darkTheme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: Colors.grey.shade100,
-          backgroundColor: Colors.orange,
-          cardColor: const Color.fromARGB(255, 27, 34, 39),
-          canvasColor: const Color.fromARGB(255, 188, 233, 5),
-          primaryColor: Colors.black,
+          scaffoldBackgroundColor: Colors.black,
+          backgroundColor: Colors.blueAccent,
         ),
         initialBinding: Injector.instance,
         onGenerateRoute: RouteGenerator.generateRoutes,
-        initialRoute: RouteGenerator.routeDetail,
+        initialRoute: RouteGenerator.routeHome,
       ),
       status: (e) {
         print(e);
