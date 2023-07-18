@@ -1,5 +1,5 @@
 //database
-// const db = require('../backend/database/database.js');
+const db = require("../backend/database/database.js");
 
 //package
 const express = require("express");
@@ -31,5 +31,7 @@ app.use("/api/account", routerGenerator.accountRouter);
 app.use("/api/data/", routerGenerator.jeepDatasRouter);
 
 app.listen(3000, function () {
+  db.init();
+
   console.log(`server running`);
 });

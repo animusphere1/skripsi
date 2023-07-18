@@ -1,19 +1,14 @@
-const { json } = require("body-parser");
 const express = require("express");
 
 const getAllDataRouter = express.Router();
 
 getAllDataRouter.get("/", (req, res) => {
-  let { data } = req.body;
+  const { ambil } = req.query;
 
-  let datas = JSON.parse(data);
-
-  if (typeof Array.isArray(datas)) {
-    const found = datas.find((element) => element["fajar"] == 1);
-
-    console.log(found);
-
-    res.status(200).json({ datas: found });
+  if (ambil !== undefined) {
+    res.send("get query");
+  } else {
+    res.send("get all");
   }
 });
 

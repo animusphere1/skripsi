@@ -13,12 +13,14 @@ Future<void> init() async {
     Permission.gpsPermission(),
     PaymentController.instance.init(),
   ]);
-
-  print(response);
 }
 
 void main() {
   init().then((value) => runApp(const MyApp()));
+}
+
+Future<void> coba({i}) async {
+  await Future.delayed(Duration(seconds: 2));
 }
 
 class MyApp extends StatelessWidget {
