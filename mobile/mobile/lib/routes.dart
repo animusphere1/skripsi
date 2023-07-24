@@ -23,14 +23,12 @@ class RouteGenerator {
       case routeDetail:
         if (kDebugMode) {
           return GetPageRoute(
-            page: () => DetailPage(
-              ContentModel(title: 'test1', caption: 'test1'),
-            ),
+            page: () => const DetailPage(),
           );
         } else {
           if (arguments is ContentModel) {
             return GetPageRoute(
-              page: () => DetailPage(arguments),
+              page: () => const DetailPage(),
             );
           } else {
             return GetPageRoute(

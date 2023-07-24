@@ -9,14 +9,22 @@ const db = require("../database/database.js");
 const response = require("../../backend/utils/response.js");
 
 accountRouter.post("/login", async (req, res) => {
-  var data = await db.getData();
+  var { id_user } = req.body;
 
-  console.log(`ini data : ${data}`);
+  try {
+    var datas = await db.getData(id_user);
 
-  if (data.length === 0) {
-    res.status(400).json({ status: "error" });
-  } else {
-    res.status(200).json({ status: "login", data: data });
+    if (datas.length === 0) {
+      res.status(400).json({ status: "data tidak ditemukan" });
+    } else {
+      var search = datas.filter((element) => {
+        return element.firstname == "siapa saya";
+      });
+
+      res.status(200).json({ status: "login", data: search });
+    }
+  } catch (error) {
+    res.status(400).json({ status: error });
   }
 });
 

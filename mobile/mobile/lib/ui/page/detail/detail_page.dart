@@ -1,40 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/ui/models/content_model.dart';
-import 'package:mobile/ui/utils/fonts.dart';
+import 'package:mobile/main.dart';
 import 'package:mobile/ui/utils/size.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class DetailPage extends StatelessWidget {
-  final ContentModel contentModel;
-
-  const DetailPage(
-    this.contentModel, {
-    super.key,
-  });
+  const DetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            _appBar(context),
-          ],
+    return ScrollConfiguration(
+      behavior: RemoveScrollGlow(),
+      child: SafeArea(
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  height: heightSize(context) * 0.3,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(
+                        'https://picsum.photos/seed/picsum/200/300',
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-      ),
-    );
-  }
-
-  Widget _appBar(BuildContext context) {
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 10,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [],
       ),
     );
   }

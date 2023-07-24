@@ -9,7 +9,7 @@ import 'package:mobile/routes.dart';
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  var response = await Future.wait([
+  await Future.wait([
     Permission.gpsPermission(),
     PaymentController.instance.init(),
   ]);
@@ -31,18 +31,18 @@ class MyApp extends StatelessWidget {
     return BackgroundServices(
       child: GetMaterialApp(
         title: 'Mobile App',
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.light,
         theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey.shade100,
           backgroundColor: Colors.white,
         ),
         darkTheme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: Colors.black,
-          backgroundColor: Colors.blueAccent,
+          scaffoldBackgroundColor: Colors.black26,
+          backgroundColor: Colors.black26,
         ),
         initialBinding: Injector.instance,
         onGenerateRoute: RouteGenerator.generateRoutes,
-        initialRoute: RouteGenerator.routeHome,
+        initialRoute: RouteGenerator.routeDetail,
       ),
       status: (e) {
         print(e);
