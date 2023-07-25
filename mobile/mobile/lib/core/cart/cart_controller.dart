@@ -5,14 +5,16 @@ class CartController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
 
     cartModel = CartModel(price: 0).obs;
   }
 
   Future<void> onChange(int price, String nameTrip) async {
-    cartModel.value = CartModel(price: price, nameTrip: nameTrip);
+    cartModel.value = CartModel(
+      price: price,
+      nameTrip: nameTrip,
+    );
   }
 }
 
