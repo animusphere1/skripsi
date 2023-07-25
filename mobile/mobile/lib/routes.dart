@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:mobile/ui/models/content_model.dart';
-import 'package:mobile/ui/page/detail/detail_page.dart';
+import 'package:mobile/ui/page/checkout/checkout_page.dart';
 import 'package:mobile/ui/page/error/error_page.dart';
 import 'package:mobile/ui/page/home/home_page.dart';
 
 class RouteGenerator {
   static const routeHome = '/';
-  static const routeDetail = '/detail';
+  static const routeCheckout = '/checkout';
   static const routeProfile = '/profile';
 
   static Route<dynamic> generateRoutes(RouteSettings settings) {
@@ -20,15 +20,15 @@ class RouteGenerator {
         return GetPageRoute(
           page: () => const HomePage(),
         );
-      case routeDetail:
+      case routeCheckout:
         if (kDebugMode) {
           return GetPageRoute(
-            page: () => const DetailPage(),
+            page: () => CheckoutPage(),
           );
         } else {
           if (arguments is ContentModel) {
             return GetPageRoute(
-              page: () => const DetailPage(),
+              page: () => CheckoutPage(),
             );
           } else {
             return GetPageRoute(

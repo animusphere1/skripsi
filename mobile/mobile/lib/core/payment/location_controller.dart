@@ -1,33 +1,22 @@
 import 'package:get/get.dart';
-import 'package:mobile/core/core.dart';
 
-class LocationController extends GetxController implements Core {
+class LocationController extends GetxController {
   late RxString address;
 
-  @override
   void init() {
     address = "".obs;
   }
 
   @override
-  void ready() {
-    // TODO: implement ready
-    address.value = "Banjarsari";
-  }
-
-  @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
 
     init();
   }
 
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
+  Future<void> initAddress(String alamat) async {
+    await Future.delayed(const Duration(seconds: 10));
 
-    ready();
+    address.value = alamat;
   }
 }

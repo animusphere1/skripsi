@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         ),
         initialBinding: Injector.instance,
         onGenerateRoute: RouteGenerator.generateRoutes,
-        initialRoute: RouteGenerator.routeDetail,
+        initialRoute: RouteGenerator.routeCheckout,
       ),
       status: (e) {
         print(e);

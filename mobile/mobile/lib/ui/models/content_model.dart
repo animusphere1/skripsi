@@ -1,8 +1,11 @@
+import 'package:mobile/ui/models/trip_model.dart';
+
 class ContentModel {
   String title;
   String caption;
+  List<TripModel>? tripModels;
 
-  ContentModel({required this.title, required this.caption});
+  ContentModel({required this.title, required this.caption, this.tripModels});
 
   factory ContentModel.fromJson(Map map) => ContentModel(
         title: map['title'] ?? 'title',
