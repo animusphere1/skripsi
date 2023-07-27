@@ -18,61 +18,69 @@ class TransaksiPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetX<TransaksiController>(
-        init: TransaksiController(),
-        builder: (controller) {
-          return ScrollConfiguration(
-            behavior: RemoveScrollGlow(),
-            child: SafeArea(
-              child: Scaffold(
-                body: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _appBar(context),
-                    controller.transaksiModels.isNotEmpty
-                        ? Expanded(
-                            child: RefreshIndicator(
-                              onRefresh: () async {
-                                await controller.dapatkanLagiAtauMuatUlang();
-                              },
-                              child: SingleChildScrollView(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 20,
-                                ),
-                                child: Column(
-                                  children: [
-                                    ...List.generate(
-                                      controller.transaksiModels.length,
-                                      (index) => _itemTransaksi(context),
-                                    ),
-                                  ],
+      init: TransaksiController(),
+      builder: (controller) {
+        return ScrollConfiguration(
+          behavior: RemoveScrollGlow(),
+          child: SafeArea(
+            child: Scaffold(
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _appBar(context),
+                  controller.ngeloadData.value
+                      ? Expanded(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: const CircularProgressIndicator(),
+                          ),
+                        )
+                      : controller.transaksiModels.isNotEmpty
+                          ? Expanded(
+                              child: RefreshIndicator(
+                                onRefresh: () async {
+                                  await controller.dapatkanLagiAtauMuatUlang();
+                                },
+                                child: SingleChildScrollView(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 20,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      ...List.generate(
+                                        controller.transaksiModels.length,
+                                        (index) => _itemTransaksi(context),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                        : Expanded(
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: SizedBox(
-                                width: widthSize(context) * 0.8,
-                                child: Text(
-                                  'Tidak Ada Transaksi Berlangsung',
-                                  textAlign: TextAlign.center,
-                                  style: googleFontsNunito().copyWith(
-                                    color: Colors.grey.shade400,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25,
+                            )
+                          : Expanded(
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: SizedBox(
+                                  width: widthSize(context) * 0.8,
+                                  child: Text(
+                                    'Tidak Ada Transaksi Berlangsung',
+                                    textAlign: TextAlign.center,
+                                    style: googleFontsNunito().copyWith(
+                                      color: Colors.grey.shade400,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                  ],
-                ),
+                ],
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   Widget _itemTransaksi(BuildContext context,

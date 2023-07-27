@@ -28,7 +28,7 @@ app.use("/api/payment", routerGenerator.paymentRouter);
 
 app.use("/api/account", routerGenerator.accountRouter);
 
-app.use("/api/data/", routerGenerator.jeepDatasRouter);
+app.use("/api/transaksi", routerGenerator.transaksiRouter);
 
 app.listen(3000, function () {
   db.init();
