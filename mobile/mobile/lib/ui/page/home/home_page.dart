@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mobile/core/cart/cart_controller.dart';
 import 'package:mobile/main.dart';
-import 'package:mobile/routes.dart';
 import 'package:mobile/ui/models/content_model.dart';
+import 'package:mobile/ui/page/checkout/checkout_controller.dart';
+import 'package:mobile/ui/page/invoice/invoice_controller.dart';
 import 'package:mobile/ui/utils/fonts.dart';
 import 'package:mobile/ui/utils/size.dart';
 
 import '../widgets/item_content_widget.dart';
 import '../widgets/search_textfield_widget.dart';
 import '../widgets/title_widget.dart';
-import '../../utils/extension/extension_currency.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+
+    Get.delete<CartController>();
+    Get.delete<InvoiceController>();
+    Get.delete<CheckoutController>();
+  }
 
   @override
   Widget build(BuildContext context) {

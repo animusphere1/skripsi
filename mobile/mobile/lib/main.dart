@@ -19,10 +19,6 @@ void main() {
   init().then((value) => runApp(const MyApp()));
 }
 
-Future<void> coba({i}) async {
-  await Future.delayed(Duration(seconds: 2));
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -42,7 +38,7 @@ class MyApp extends StatelessWidget {
         ),
         initialBinding: Injector.instance,
         onGenerateRoute: RouteGenerator.generateRoutes,
-        initialRoute: RouteGenerator.routeCheckout,
+        initialRoute: RouteGenerator.routeListTransaksi,
       ),
       status: (e) {
         print(e);

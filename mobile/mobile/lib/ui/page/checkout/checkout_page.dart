@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mobile/core/date/time_convert.dart';
 import 'package:mobile/main.dart';
 import 'package:mobile/ui/page/checkout/checkout_controller.dart';
 import 'package:mobile/ui/utils/fonts.dart';
@@ -18,12 +19,6 @@ class CheckoutPage extends StatelessWidget {
     return GetX<CheckoutController>(
       init: CheckoutController(),
       builder: (controller) {
-        List<Widget> pages = [
-          _pageViewDetail(context, controller),
-          _pagePembayaran(context, controller),
-          _pageCheckKembali(context, controller),
-        ];
-
         return ScrollConfiguration(
           behavior: RemoveScrollGlow(),
           child: SafeArea(
@@ -32,16 +27,16 @@ class CheckoutPage extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: heightSize(context),
-                    child: PageView.builder(
+                    child: PageView(
                       controller: controller.pageController.value,
                       onPageChanged: (value) {
                         controller.page.value = value;
                       },
-                      // physics: const NeverScrollableScrollPhysics(),
-                      itemCount: pages.length,
-                      itemBuilder: (context, index) {
-                        return pages[index];
-                      },
+                      children: [
+                        _pageViewDetail(context, controller),
+                        _pagePembayaran(context, controller),
+                        _pageCheckKembali(context, controller),
+                      ],
                     ),
                   ),
                   _appBar(context, timelines, controller),
@@ -57,7 +52,7 @@ class CheckoutPage extends StatelessWidget {
 
   Widget _pageViewDetail(
     BuildContext context,
-    CheckoutController checkoutController,
+    CheckoutController controller,
   ) {
     return Container(
       padding: EdgeInsets.only(
@@ -103,6 +98,12 @@ class CheckoutPage extends StatelessWidget {
                 );
 
                 var dateFormat = DateFormat("dd-MM-yyyy");
+
+                if (date != null) {
+                  var tanggal = dateFormat.format(date);
+
+                  controller.pilihTanggal(tanggal);
+                }
               },
               child: Container(
                 height: 50,
@@ -119,7 +120,9 @@ class CheckoutPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'Pilih tanggal',
+                        controller.tanggal.value == ''
+                            ? 'Pilih Tanggal'
+                            : controller.tanggal.value,
                         style: googleFontsNunito().copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.grey.shade400,
@@ -142,13 +145,17 @@ class CheckoutPage extends StatelessWidget {
             const SizedBox(height: 7),
             GestureDetector(
               onTap: () async {
-                await showTimePicker(
+                var jamDipilih = await showTimePicker(
                   context: context,
                   initialTime: TimeOfDay(
                     hour: DateTime.now().hour,
                     minute: DateTime.now().minute,
                   ),
                 );
+
+                if (jamDipilih != null) {
+                  controller.jam.value = convertTo24Hour(jamDipilih);
+                }
               },
               child: Container(
                 height: 50,
@@ -165,7 +172,9 @@ class CheckoutPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'Pilih jam',
+                        controller.jam.value != ''
+                            ? controller.jam.value
+                            : 'Pilih jam',
                         style: googleFontsNunito().copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.grey.shade400,
@@ -223,7 +232,7 @@ class CheckoutPage extends StatelessWidget {
             ...['BRI', 'BCA', 'BNI'].map(
               (e) => GestureDetector(
                 onTap: () {
-                  controller.pembayaranYandDipilih.value = e;
+                  controller.pilihPembayaran(e);
                 },
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 10),
@@ -262,197 +271,199 @@ class CheckoutPage extends StatelessWidget {
     BuildContext context,
     CheckoutController controller,
   ) {
-    return Container(
-      padding: EdgeInsets.only(
-        top: heightSize(context) * 0.27,
-        right: 20,
-        left: 20,
-      ),
-      decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Mohon check kembali transaksi anda',
-              style: googleFontsNunito().copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+    return !controller.isLoad.value
+        ? Container(
+            padding: EdgeInsets.only(
+              top: heightSize(context) * 0.27,
+              right: 20,
+              left: 20,
             ),
-            const SizedBox(height: 2),
-            Text(
-              'Apabila ada kendala bisa hubungin admin via halaman bantuan',
-              style: googleFontsNunito().copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-                fontSize: 12,
-              ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
             ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 15,
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey.shade300,
-                ),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(5),
-                ),
-              ),
+            child: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Pembayaran via',
-                        style: googleFontsNunito().copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                      Text(
-                        'Edit',
-                        style: googleFontsNunito().copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'Mohon check kembali transaksi anda',
+                    style: googleFontsNunito().copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    'Apabila ada kendala bisa hubungin admin via halaman bantuan',
+                    style: googleFontsNunito().copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
+                      fontSize: 12,
+                    ),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Bank',
-                        style: googleFontsNunito().copyWith(
-                          color: Colors.grey,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 15,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey.shade300,
                       ),
-                      Text(
-                        controller.pembayaranYandDipilih.value,
-                        style: googleFontsNunito().copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(5),
                       ),
-                    ],
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Pembayaran via',
+                              style: googleFontsNunito().copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                            Text(
+                              'Edit',
+                              style: googleFontsNunito().copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Bank',
+                              style: googleFontsNunito().copyWith(
+                                color: Colors.grey,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              controller.pembayaranYandDipilih.value,
+                              style: googleFontsNunito().copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 15,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey.shade300,
+                      ),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Detail Transaksi',
+                              style: googleFontsNunito().copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Nama Bisnis',
+                              style: googleFontsNunito().copyWith(
+                                color: Colors.grey,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Jeep Tawangmangu',
+                              style: googleFontsNunito().copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Nama Trip',
+                              style: googleFontsNunito().copyWith(
+                                color: Colors.grey,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              (controller.cartModel.value.nameTrip ?? ''),
+                              style: googleFontsNunito().copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total',
+                              style: googleFontsNunito().copyWith(
+                                color: Colors.grey,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              (controller.cartModel.value.price ?? 0)
+                                  .toRupiah(),
+                              style: googleFontsNunito().copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: heightSize(context) * 0.2,
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 15,
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey.shade300,
-                ),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(5),
-                ),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Detail Transaksi',
-                        style: googleFontsNunito().copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                      Text(
-                        'Edit',
-                        style: googleFontsNunito().copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Nama Driver',
-                        style: googleFontsNunito().copyWith(
-                          color: Colors.grey,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'Jeep Tawangmangu',
-                        style: googleFontsNunito().copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Nama Trip',
-                        style: googleFontsNunito().copyWith(
-                          color: Colors.grey,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        controller.cartModel.value.nameTrip!,
-                        style: googleFontsNunito().copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Total',
-                        style: googleFontsNunito().copyWith(
-                          color: Colors.grey,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        controller.cartModel.value.price!.toRupiah(),
-                        style: googleFontsNunito().copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+          )
+        : const SizedBox(
+            child: Center(
+              child: CircularProgressIndicator(),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 
   Widget _appBar(
@@ -579,12 +590,14 @@ class CheckoutPage extends StatelessWidget {
           ),
         ),
         child: GestureDetector(
-          onTap: () {
-            if (controller.pageController.value.page != 3) {
+          onTap: () async {
+            if (controller.page.value != 2) {
               controller.pageController.value.nextPage(
                 duration: const Duration(seconds: 1),
                 curve: Curves.ease,
               );
+            } else {
+              await controller.bayar();
             }
           },
           child: Container(
