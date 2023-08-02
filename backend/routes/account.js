@@ -2,46 +2,38 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const accountRouter = express.Router();
-
 const db = require("../database/database.js");
 
 //response
 const response = require("../../backend/utils/response.js");
 
-accountRouter.post("/login", async (req, res) => {
-  var { id_user } = req.body;
+accountRouter.post("/masuk", async (req, res) => {
+  var { username, email, password } = req.body;
 
-  try {
-    var datas = await db.getData(id_user);
+  console.log(email);
 
-    if (datas.length === 0) {
-      res.status(400).json({ status: "data tidak ditemukan" });
-    } else {
-      var search = datas.filter((element) => {
-        return element.firstname == "siapa saya";
-      });
-
-      res.status(200).json({ status: "login", data: search });
-    }
-  } catch (error) {
-    res.status(400).json({ status: error });
+  if (username !== undefined || email !== undefined) {
+    db.connection.query("select * from tabel_akun where (username = ? or email = ?) and password = ?", [username, email, password], (err, rows, fields) => {
+      if (rows.length === 0) {
+        res.status(404).json({ status: 404 });
+      } else {
+        res.status(200).json({ status: 200, datas: rows });
+      }
+    });
   }
 });
 
-accountRouter.get("/logout", (req, res) => {
+accountRouter.get("/keluar", (req, res) => {
   res.status(200).json({ status: "logout" });
 });
 
-accountRouter.post("/signup", async (req, res) => {
-  var { nama } = req.body;
+accountRouter.post("/buatbaru", async (req, res) => {
+  var { username, password, nama_asli, email } = req.body;
 
-  var json = JSON.parse(nama);
+  var tipe_account = "customer";
 
-  res.status(200).json({
-    status: "signup",
-    data: {
-      nama: json["nama"],
-    },
+  db.connection.query("insert into tabel_akun (id_user,username,password,nama_asli,email,tipe_account) values (?,?,?,?,?,?)", [2, username, password, nama_asli, email, tipe_account], (err, rows, fields) => {
+    res.send(rows);
   });
 });
 

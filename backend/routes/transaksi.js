@@ -20,9 +20,12 @@ transaksiRouter.get("/transaksijeep", async (req, res) => {
 });
 
 transaksiRouter.post("/transaksijeep/buatbaru", async (req, res) => {
-  db.connection.query("insert into transaksi_jeep (id_transaksi, nama_bisnis,nama_customer,order_id,nama_trip) values ('2000','Jeep Wisata Tawangmangu','doni','22222','trip c')", (err, rows, fields) => {
-    console.log(rows);
-  });
+  db.connection.query(
+    "insert into tabel_transaksijeep (id_transaksi, nama_bisnis,nama_customer,order_id,nama_trip,status_transaksi,tanggal_ngejeep,jam_ngejeep) values ('2000','Jeep Wisata Tawangmangu','doni','22222','trip c','1','3','4' )",
+    (err, rows, fields) => {
+      console.log(err);
+    }
+  );
 });
 
 transaksiRouter.get("/transaksijeep/updatestatus", async (req, res) => {

@@ -4,6 +4,7 @@ const db = require("../backend/database/database.js");
 //package
 const express = require("express");
 const multer = require("multer");
+const session = require("express-session");
 //utils
 const initEnv = require("./utils/config/environtment.js");
 
@@ -19,6 +20,16 @@ initEnv();
 app.use(upload.none());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.set("trust proxy", 1);
+app.use(
+  session({
+    secret: process.env.sessionID,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("ini index");
