@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mobile/main.dart';
 import 'package:mobile/ui/page/transaksi/transaksi_controller.dart';
-import 'package:mobile/ui/utils/controller.dart';
-
 import '../../../routes.dart';
 import '../../utils/fonts.dart';
 import '../../utils/size.dart';

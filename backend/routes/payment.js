@@ -11,31 +11,19 @@ paymentRouter.post("/gettoken", async (req, res) => {
 
   console.log(params);
 
-  try {
-    var response = await midtrans.getPayment(params);
+  var response = await midtrans.getPayment(params);
 
-    console.log(response);
+  console.log(response);
 
-    if (response.datas !== null) {
-      sendEmail({ email: "fajarwidiarno@gmail.com" });
+  if (response.datas !== null) {
+    var vanumber = response.datas.va_numbers;
 
-      res.status(400).json({ status: "success", data: response.datas });
-    } else {
-      res.status(200).json({ status: "failed", data: null, error: response.error });
-    }
-  } catch (error) {
-    res.status(200).send({ status: error });
+    console.log(vanumber);
+
+    res.status(400).json({ status: response.status, data: response.datas });
+  } else {
+    res.status(200).json({ status: response.status });
   }
-});
-
-paymentRouter.get("/checktoken", async (req, res) => {
-  const { id } = req.body;
-
-  console.log(id);
-
-  var response = await midtrans.checkStatus(id);
-
-  res.status(400).json({ status: response });
 });
 
 module.exports = { paymentRouter };

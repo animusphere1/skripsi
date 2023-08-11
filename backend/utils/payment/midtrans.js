@@ -16,45 +16,36 @@ async function getPayment(params) {
 
   if (check.status.status_code == 201) {
     return {
-      datas: null,
-      error: {
-        code: 400,
-        messages: "order id sudah ada atau pernah dipakai",
-      },
+      status: 400,
     };
   } else {
-    try {
-      var parameter = {
-        payment_type: "bank_transfer",
-        bank_transfer: { bank: bank },
-        transaction_details: {
-          order_id: order_id,
-          gross_amount: 1000000,
+    var parameter = {
+      payment_type: "bank_transfer",
+      bank_transfer: { bank: bank },
+      transaction_details: {
+        order_id: order_id,
+        gross_amount: 1000000,
+      },
+      item_details: items_details,
+      customer_details: {
+        first_name: "restu wahyu",
+        last_name: " saputra",
+        email: "fajarbagusjp@gmail.com",
+        phone: "087820154350",
+        billing_address: {
+          address: "jl.sibuta gua hantu no.120",
+          city: "Depok",
+          postal_code: "16436",
         },
-        item_details: items_details,
-        customer_details: {
-          first_name: "restu wahyu",
-          last_name: " saputra",
-          email: "fajarbagusjp@gmail.com",
-          phone: "087820154350",
-          billing_address: {
-            address: "jl.sibuta gua hantu no.120",
-            city: "Depok",
-            postal_code: "16436",
-          },
-        },
-      };
+      },
+    };
 
-      var response_payment = await core.charge(parameter);
+    var response_payment = await core.charge(parameter);
 
-      return {
-        datas: response_payment,
-      };
-    } catch (error) {
-      //jika terjadi kesalahan pada transaksi
-
-      return { datas: null, error: "error saat transaksi" };
-    }
+    return {
+      status: 200,
+      datas: response_payment,
+    };
   }
 }
 

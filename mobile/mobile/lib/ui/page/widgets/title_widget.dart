@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import '../../utils/fonts.dart';
 
 class TitleWidget extends StatelessWidget {
+  final String? judul;
+
   const TitleWidget({
     Key? key,
+    this.judul,
   }) : super(key: key);
 
   @override
@@ -16,7 +19,7 @@ class TitleWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Recommended",
+            judul ?? 'null',
             style: googleFontsNunito().copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 20,

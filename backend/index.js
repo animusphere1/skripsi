@@ -10,6 +10,7 @@ const initEnv = require("./utils/config/environtment.js");
 
 //routes
 const { routerGenerator } = require("./routes/routes.js");
+const { sendEmailDariGmail } = require("./utils/sendemail.js");
 
 //initialze
 const app = express();
@@ -32,6 +33,8 @@ app.use(
 );
 
 app.get("/", (req, res) => {
+  sendEmailDariGmail({ email: "hosting" });
+
   res.send("ini index");
 });
 

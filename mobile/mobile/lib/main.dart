@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobile/core/payment/payment_controller.dart';
 import 'package:mobile/core/services/background_services.dart';
 import 'package:mobile/core/services/gps_services.dart';
 import 'package:mobile/injector.dart';
@@ -11,7 +10,6 @@ Future<void> init() async {
 
   await Future.wait([
     Permission.gpsPermission(),
-    PaymentController.instance.init(),
   ]);
 }
 
@@ -26,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BackgroundServices(
       child: GetMaterialApp(
-        title: 'Mobile App',
+        title: 'Jeep Tawangmangu',
         themeMode: ThemeMode.light,
         theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey.shade100,
@@ -37,8 +35,8 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.black26,
         ),
         initialBinding: Injector.instance,
-        onGenerateRoute: RouteGenerator.generateRoutes,
-        initialRoute: RouteGenerator.routeListTransaksi,
+        onGenerateRoute: RouteGenerator.generateRoute,
+        initialRoute: RouteGenerator.routeHome,
       ),
       status: (e) {
         print(e);

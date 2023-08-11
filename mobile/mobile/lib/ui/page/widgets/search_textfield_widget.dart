@@ -4,8 +4,11 @@ import 'package:ionicons/ionicons.dart';
 import '../../utils/fonts.dart';
 
 class SearchTextField extends StatelessWidget {
+  final String? title;
+
   const SearchTextField({
     Key? key,
+    this.title,
   }) : super(key: key);
 
   @override
@@ -31,7 +34,7 @@ class SearchTextField extends StatelessWidget {
                 fontSize: 15,
               ),
               decoration: InputDecoration.collapsed(
-                hintText: 'Search Destination',
+                hintText: title ?? 'Search Destination',
                 hintStyle: googleFontsNunito().copyWith(
                   color: Colors.grey.shade300,
                   fontWeight: FontWeight.bold,
@@ -40,7 +43,7 @@ class SearchTextField extends StatelessWidget {
               ),
             ),
           ),
-          const Icon(Ionicons.search),
+          // const Icon(Ionicons.search),
         ],
       ),
     );

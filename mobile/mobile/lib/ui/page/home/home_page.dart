@@ -1,194 +1,145 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
-import 'package:mobile/core/cart/cart_controller.dart';
-import 'package:mobile/main.dart';
-import 'package:mobile/ui/models/content_model.dart';
-import 'package:mobile/ui/page/checkout/checkout_controller.dart';
-import 'package:mobile/ui/page/invoice/invoice_controller.dart';
 import 'package:mobile/ui/utils/fonts.dart';
 import 'package:mobile/ui/utils/size.dart';
 
-import '../widgets/item_content_widget.dart';
-import '../widgets/search_textfield_widget.dart';
-import '../widgets/title_widget.dart';
-
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-
-    Get.delete<CartController>();
-    Get.delete<InvoiceController>();
-    Get.delete<CheckoutController>();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return ScrollConfiguration(
-      behavior: RemoveScrollGlow(),
-      child: SafeArea(
-        child: Scaffold(
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.only(top: 20),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: _appBar(),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
                 ),
-                const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                  ),
-                  child: SearchTextField(),
+                decoration: const BoxDecoration(
+                  color: Colors.black,
                 ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          width: widthSize(context) * 0.1,
+                          height: heightSize(context) * 0.1,
+                          decoration: const BoxDecoration(
+                            color: Colors.green,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            'Fajar Bagus Widiarno'
+                                .split(' ')[0][0]
+                                .toUpperCase(),
+                            style: googleFontsNunito().copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Selamat Pagi !',
+                              style: googleFontsNunito().copyWith(
+                                color: Colors.grey.shade300,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              'Fajar Bagus Widiarno',
+                              style: googleFontsNunito().copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).backgroundColor,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.only(left: 20),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      ...List.from([
-                        {
-                          'title': 'Near me',
-                          'icon': Icons.near_me,
-                        },
-                        {
-                          'title': 'NgeJeep',
-                          'icon': Ionicons.car_sport,
-                        },
-                        {
-                          'title': 'NgeVilla',
-                          'icon': Icons.home_sharp,
-                        }
-                      ]).map(
-                        (e) => Container(
-                          margin: const EdgeInsets.only(right: 15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    width: 1.0,
-                                  ),
-                                ),
-                                child: Icon(
-                                  e['icon'],
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                e['title'],
-                                textAlign: TextAlign.center,
-                                style: googleFontsNunito().copyWith(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ],
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                          // border: Border.all(
+                          //   color: Colors.grey.shade300,
+                          // ),
+                        ),
+                        margin: const EdgeInsets.only(right: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 10,
+                        ),
+                        child: Text(
+                          'Semua',
+                          style: googleFontsNunito().copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
+                      ...List.from(
+                        ['Terdekat dari Kamu', 'Yang Tersedia'],
+                      ).map(
+                        (e) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            border: Border.all(
+                              color: Colors.grey.shade300,
+                            ),
+                          ),
+                          margin: const EdgeInsets.only(right: 12),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 10,
+                          ),
+                          child: Text(
+                            e,
+                            style: googleFontsNunito().copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
-                const TitleWidget(),
-                SizedBox(
-                  height: heightSize(context) * 0.4,
-                  child: ListView.builder(
-                    itemCount: 20,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return ItemContent(
-                        contentModel: ContentModel(
-                          title: 'nama',
-                          caption: 'test',
-                        ),
-                      );
-                    },
-                  ),
-                )
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _appBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'LOCATION',
-              style: googleFontsNunito().copyWith(
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-                letterSpacing: 0.5,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Icon(
-                  Ionicons.location_sharp,
-                  size: 18,
-                  color: Colors.blue,
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  'Tawangmangu, Indonesia',
-                  style: googleFontsNunito().copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-        Container(
-          height: 40,
-          width: 40,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.green,
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(
-                'https://picsum.photos/id/237/200/300',
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
