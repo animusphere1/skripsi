@@ -2,9 +2,9 @@ const midtransClient = require("midtrans-client");
 const { json } = require("body-parser");
 
 async function getPayment(params) {
-  const { order_id, bank, items } = params;
+  const { order_id, bank } = params;
 
-  var items_details = JSON.parse(items);
+  console.log(order_id);
 
   let core = new midtransClient.CoreApi({
     isProduction: false,
@@ -12,13 +12,16 @@ async function getPayment(params) {
     clientKey: process.env.clientKey,
   });
 
+  //lakukan pengechekan
   var check = await checkStatus(order_id);
 
-  if (check.status.status_code == 201) {
-    return {
-      status: 400,
-    };
+  console.log(check);
+
+  if (check.status_code === 200) {
+    //apabila data sudah ada
+    return { status_code: 400 };
   } else {
+    //apabila data belum ada
     var parameter = {
       payment_type: "bank_transfer",
       bank_transfer: { bank: bank },
@@ -26,10 +29,17 @@ async function getPayment(params) {
         order_id: order_id,
         gross_amount: 1000000,
       },
-      item_details: items_details,
+      item_details: [
+        {
+          id: 1,
+          name: "ayam bakar sambal balado",
+          quantity: 1,
+          price: 1000000,
+        },
+      ],
       customer_details: {
         first_name: "restu wahyu",
-        last_name: " saputra",
+        last_name: "saputra",
         email: "fajarbagusjp@gmail.com",
         phone: "087820154350",
         billing_address: {
@@ -40,10 +50,11 @@ async function getPayment(params) {
       },
     };
 
+    //buat transaksi baru
     var response_payment = await core.charge(parameter);
 
     return {
-      status: 200,
+      status_code: response_payment.status_code,
       datas: response_payment,
     };
   }
@@ -57,13 +68,13 @@ async function checkStatus(order_id) {
   });
 
   try {
-    var response = await snap.transaction.status(order_id);
+    var response = await snap.transaction.status(`${order_id}`);
 
     console.log(response);
 
-    return { status: response };
+    return { status_code: 200, transaction_status: response.transaction_status };
   } catch (error) {
-    return { status: 400 };
+    return { status_code: 400 };
   }
 }
 

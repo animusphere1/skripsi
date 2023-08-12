@@ -1,7 +1,6 @@
 const express = require("express");
 
 const midtrans = require("../../backend/utils/payment/midtrans.js");
-const { paymentResponse } = require("../../backend/utils/response.js");
 const { sendEmail } = require("../utils/sendemail.js");
 
 const paymentRouter = express.Router();
@@ -9,20 +8,13 @@ const paymentRouter = express.Router();
 paymentRouter.post("/gettoken", async (req, res) => {
   let params = req.body;
 
-  console.log(params);
+  console.log("check dulu");
+  var response_payment = await midtrans.getPayment(params);
 
-  var response = await midtrans.getPayment(params);
-
-  console.log(response);
-
-  if (response.datas !== null) {
-    var vanumber = response.datas.va_numbers;
-
-    console.log(vanumber);
-
-    res.status(400).json({ status: response.status, data: response.datas });
+  if (response_payment.status_code === 201) {
+    res.status(200).json({ status_code: response_payment.status_code, data: response_payment.datas });
   } else {
-    res.status(200).json({ status: response.status });
+    res.status(400).json({ status_code: response_payment.status_code });
   }
 });
 

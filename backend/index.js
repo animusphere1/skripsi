@@ -22,19 +22,17 @@ app.use(upload.none());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.set("trust proxy", 1);
-app.use(
-  session({
-    secret: process.env.sessionID,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true },
-  })
-);
+// app.set("trust proxy", 1);
+// app.use(
+//   session({
+//     secret: process.env.sessionID,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: true },
+//   })
+// );
 
 app.get("/", (req, res) => {
-  sendEmailDariGmail({ email: "hosting" });
-
   res.send("ini index");
 });
 
